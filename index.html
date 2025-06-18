@@ -2,252 +2,275 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Webshop GewoonMasontje</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GewoonMasontje | Home</title>
   <style>
+    :root {
+      --main-orange: #ff6600;
+      --dark: #111;
+      --light: #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fff;
-      color: #000;
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
-      border: 3px solid orange;
-      border-radius: 12px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #ffffff, #f4f4f4);
+      color: var(--dark);
+      scroll-behavior: smooth;
     }
-    h1 {
-      color: orange;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    .abonnees {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 2rem;
-      font-size: 1.2rem;
-      color: black;
-    }
-    .product {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-    .image-container {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      border: 2px solid orange;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      transition: opacity 0.4s ease;
-    }
-    .arrows {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-    .arrow {
-      background-color: rgba(255, 165, 0, 0.8);
-      color: black;
-      font-weight: bold;
-      padding: 0.4rem 0.8rem;
-      cursor: pointer;
-      pointer-events: auto;
-      border-radius: 50%;
-      user-select: none;
-      font-size: 1.5rem;
-      transition: background-color 0.3s ease;
-    }
-    .arrow:hover {
-      background-color: orange;
-    }
-    .details {
-      flex: 1;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 1rem;
-    }
-    select, input[type="text"] {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.3rem;
-      border: 2px solid orange;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-    button {
-      background-color: orange;
-      color: black;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      font-weight: bold;
-      font-size: 1.2rem;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 1.5rem;
-      transition: background-color 0.3s ease;
-      width: 100%;
-    }
-    button:hover {
-      background-color: #cc7a00;
-    }
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: white;
-      border: 3px solid orange;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
-      text-align: center;
-      transition: transform 0.3s ease;
+
+    header {
+      background-color: var(--main-orange);
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
       z-index: 1000;
-      max-width: 90%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      animation: slideDown 0.6s ease-out;
     }
-    .popup.show {
-      transform: translate(-50%, -50%) scale(1);
+
+    nav {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
     }
-    .nieuwsbrief {
-      margin-top: 3rem;
-      border-top: 2px solid orange;
-      padding-top: 1.5rem;
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    nav a:hover {
+      color: black;
+      text-shadow: 0 0 6px white;
+      transform: scale(1.08);
+    }
+
+    .container {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .hero {
       text-align: center;
+      animation: fadeIn 1s ease;
     }
-    .nieuwsbrief input {
-      max-width: 300px;
-      margin: 0.5rem 0.3rem;
+
+    .hero img {
+      width: 260px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .hero img:hover {
+      transform: scale(1.05);
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      color: var(--main-orange);
+      margin: 25px 0 15px;
+      animation: popIn 1.2s ease;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--main-orange);
+      color: white;
+      padding: 14px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      transition: 0.3s;
+      animation: popIn 1.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #cc5200;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px var(--main-orange);
+    }
+
+    section {
+      margin-top: 70px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: slideUp 1s forwards;
+    }
+
+    section h2 {
+      font-size: 28px;
+      color: var(--main-orange);
+      margin-bottom: 15px;
+    }
+
+    section p {
+      font-size: 18px;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 100px;
+      padding: 30px;
+      background-color: #f0f0f0;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+    }
+
+    /* Animaties */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .hero img {
+        width: 90%;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Webshop GewoonMasontje</h1>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="overons.html">Over ons</a>
+      <a href="contact.html">Contact</a>
+      <a href="producties.html">Producties</a>
+      <a href="shop.html">Shop</a>
+    </nav>
+  </header>
 
-  <div class="abonnees" id="subs">Abonnees: laden...</div>
-
-  <div class="product">
-    <div class="image-container">
-      <img id="productImage" src="shirt-voor.jpeg" alt="T-shirt GewoonMasontje voorkant" />
-      <div class="arrows">
-        <div class="arrow" onclick="vorigeAfbeelding()">&#8592;</div>
-        <div class="arrow" onclick="volgendeAfbeelding()">&#8594;</div>
-      </div>
+  <div class="container">
+    <div class="hero">
+      <img src="logo.jpg" alt="Logo GewoonMasontje">
+      <h1>Welkom bij GewoonMasontje</h1>
+      <p>Hier draait alles om creativiteit, technologie en passie voor verhalen.</p>
+      <a class="cta-button" href="https://www.youtube.com/@GewoonMasontje" target="_blank">🎥 Bekijk ons YouTube-kanaal</a>
     </div>
-    <div class="details">
-      <h2>T-shirt GewoonMasontje</h2>
-      <p>Prijs: <strong>€30</strong></p>
 
-      <label for="maat">Kies maat:</label>
-      <select id="maat">
-        <option value="S">S</option>
-        <option value="M" selected>M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-      </select>
+    <section>
+      <h2>🎥 Wie zijn wij?</h2>
+      <p>
+        GewoonMasontje is gestart als een YouTube-kanaal, maar is uitgegroeid tot een creatief platform voor films, animaties, games en software.
+        Van Minecraft tot volledige filmscripts en van browsers tot Roblox-ervaringen — wij bouwen het allemaal zelf, met liefde voor het vak.
+      </p>
+      <p>
+        Wat ons uniek maakt? Alles wat je ziet is zelf geprogrammeerd, ontworpen of geschreven — met geen enkel stukje gekopieerd werk.
+      </p>
+    </section>
 
-      <label for="opmerkingen">Opmerkingen (optioneel):</label>
-      <input type="text" id="opmerkingen" placeholder="Bijv. kleur voorkeur" />
+    <section>
+      <h2>🛠️ Wat we maken</h2>
+      <p>
+        Onze producties zijn breed: we werken aan:
+        <ul>
+          <li>🎬 Films zoals "Ace, De Heldenhond"</li>
+          <li>🕹️ Roblox-games met huisdieren, gevechten en eierensystemen</li>
+          <li>🧮 Educatieve tools voor rekenen, tekenen en meer</li>
+          <li>🌐 Browsers, shops en webapps met unieke styling</li>
+        </ul>
+      </p>
+    </section>
 
-      <button onclick="bestelProduct()">In winkelmandje</button>
-    </div>
+    <section>
+      <h2>🌍 Onze Missie</h2>
+      <p>
+        Wij willen jonge makers inspireren om zelf te leren programmeren, ontwerpen en creëren. Alles is mogelijk als je begint met een idee en de drive om te leren.
+      </p>
+      <p>
+        Van een lege pagina tot een game met miljoenen blokken — we laten zien dat jij dat ook kunt.
+      </p>
+    </section>
+
+    <section>
+      <h2>📢 Leuke Weetjes</h2>
+      <p>
+        Wist je dat onze grootste game meer dan <strong>1.000.000 regels code</strong> bevat? En dat we zelfs een eigen browser hebben gebouwd in Python? Met een startpagina, nieuws en zoekbalk!
+      </p>
+      <p>
+        Ook werken we aan interactieve webtools waarmee je live kunt tekenen, lessen geven of zelfs simulaties bouwen!
+      </p>
+    </section>
+
+    <section>
+      <h2>👥 Word onderdeel van onze community</h2>
+      <p>
+        We geloven in openheid. Of je nu een kijker bent of zelf wilt leren programmeren — sluit je aan bij onze community en groei met ons mee.
+      </p>
+      <p>
+        Bekijk ons YouTube-kanaal, reageer op video’s, of stuur je projectideeën. Wij luisteren altijd!
+      </p>
+    </section>
+
+    <section>
+      <h2>🛒 Binnenkort: De GewoonShop</h2>
+      <p>
+        We zijn bezig met een officiële shop vol unieke designs, posters en goodies van onze projecten. Alles in beperkte oplage.
+        Stay tuned!
+      </p>
+    </section>
   </div>
 
-  <section class="nieuwsbrief">
-    <h3>Meld je aan voor onze nieuwsbrief</h3>
-    <input type="text" id="naam" placeholder="Je naam" required />
-    <input type="email" id="email" placeholder="Je e-mailadres" required />
-    <button onclick="meldAan()">Aanmelden</button>
-  </section>
-
-  <div class="popup" id="popup">
-    <h3>Bedankt voor je bestelling!</h3>
-    <p>Stuur je bestelling naar andreavdheijden1@gmail.com en maak het geld over.</p>
-</p>
-    <button onclick="sluitPopup()">Sluiten</button>
-  </div>
-
-  <script>
-    // Product afbeeldingen
-    const afbeeldingen = [
-      { src: 'shirt-voor.jpeg', alt: 'T-shirt GewoonMasontje - voorkant' },
-      { src: 'shirt-achter.jpeg', alt: 'T-shirt GewoonMasontje - achterkant' }
-    ];
-    let huidigeIndex = 0;
-
-    const productImage = document.getElementById('productImage');
-
-    function updateAfbeelding() {
-      productImage.style.opacity = 0;
-      setTimeout(() => {
-        productImage.src = afbeeldingen[huidigeIndex].src;
-        productImage.alt = afbeeldingen[huidigeIndex].alt;
-        productImage.style.opacity = 1;
-      }, 300);
-    }
-
-    function vorigeAfbeelding() {
-      huidigeIndex = (huidigeIndex - 1 + afbeeldingen.length) % afbeeldingen.length;
-      updateAfbeelding();
-    }
-
-    function volgendeAfbeelding() {
-      huidigeIndex = (huidigeIndex + 1) % afbeeldingen.length;
-      updateAfbeelding();
-    }
-
-    // Popup bestelling
-    const popup = document.getElementById('popup');
-
-    function bestelProduct() {
-      const maat = document.getElementById('maat').value;
-      const opmerkingen = document.getElementById('opmerkingen').value;
-      alert(`Je hebt besteld:\nT-shirt GewoonMasontje\nMaat: ${maat}\nOpmerkingen: ${opmerkingen || 'Geen'}`);
-      popup.classList.add('show');
-    }
-
-    function sluitPopup() {
-      popup.classList.remove('show');
-    }
-
-    // Abonneeteller ophalen van backend
-    const abonneesElement = document.getElementById('subs');
-    fetch('/api/abonnees')
-      .then(response => response.json())
-      .then(data => {
-        abonneesElement.textContent = `Abonnees: ${Number(data.subscribers).toLocaleString()}`;
-      })
-      .catch(() => {
-        abonneesElement.textContent = 'Abonnees: Niet beschikbaar';
-      });
-
-    // Nieuwsbrief functie
-    function meldAan() {
-      const naam = document.getElementById('naam').value.trim();
-      const email = document.getElementById('email').value.trim();
-
-      if (!naam || !email) {
-        alert('Vul alstublieft naam en e-mailadres in.');
-        return;
-      }
-      alert(`Bedankt voor je aanmelding, ${naam}!`);
-      document.getElementById('naam').value = '';
-      document.getElementById('email').value = '';
-    }
-  </script>
+  <footer>
+    &copy; 2025 GewoonMasontje. Gebouwd met passie, plezier en Python.
+  </footer>
 
 </body>
 </html>
