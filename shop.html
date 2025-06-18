@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Webshop GewoonMasontje</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff;
+      color: #000;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      border: 3px solid orange;
+      border-radius: 12px;
+    }
+    h1 {
+      color: orange;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .abonnees {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      color: black;
+    }
+    .product {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .image-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 2px solid orange;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: opacity 0.4s ease;
+    }
+    .arrows {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .arrow {
+      background-color: rgba(255, 165, 0, 0.8);
+      color: black;
+      font-weight: bold;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      pointer-events: auto;
+      border-radius: 50%;
+      user-select: none;
+      font-size: 1.5rem;
+      transition: background-color 0.3s ease;
+    }
+    .arrow:hover {
+      background-color: orange;
+    }
+    .details {
+      flex: 1;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 1rem;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 2px solid orange;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    button {
+      background-color: orange;
+      color: black;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #cc7a00;
+    }
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: white;
+      border: 3px solid orange;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
+      text-align: center;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      max-width: 90%;
+    }
+    .popup.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .nieuwsbrief {
+      margin-top: 3rem;
+      border-top: 2px solid orange;
+      padding-top: 1.5rem;
+      text-align: center;
+    }
+    .nieuwsbrief input {
+      max-width: 300px;
+      margin: 0.5rem 0.3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Webshop GewoonMasontje</h1>
+
+  <div class="abonnees" id="subs">Abonnees: laden...</div>
+
+  <div class="product">
+    <div class="image-container">
+      <img id="productImage" src="shirt-voor.jpeg" alt="T-shirt GewoonMasontje voorkant" />
+      <div class="arrows">
+        <div class="arrow" onclick="vorigeAfbeelding()">&#8592;</div>
+        <div class="arrow" onclick="volgendeAfbeelding()">&#8594;</div>
+      </div>
+    </div>
+    <div class="details">
+      <h2>T-shirt GewoonMasontje</h2>
+      <p>Prijs: <strong>€30</strong></p>
+
+      <label for="maat">Kies maat:</label>
+      <select id="maat">
+        <option value="S">S</option>
+        <option value="M" selected>M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+
+      <label for="opmerkingen">Opmerkingen (optioneel):</label>
+      <input type="text" id="opmerkingen" placeholder="Bijv. kleur voorkeur" />
+
+      <button onclick="bestelProduct()">In winkelmandje</button>
+    </div>
+  </div>
+
+  <section class="nieuwsbrief">
+    <h3>Meld je aan voor onze nieuwsbrief</h3>
+    <input type="text" id="naam" placeholder="Je naam" required />
+    <input type="email" id="email" placeholder="Je e-mailadres" required />
+    <button onclick="meldAan()">Aanmelden</button>
+  </section>
+
+  <div class="popup" id="popup">
+    <h3>Bedankt voor je bestelling!</h3>
+    <p>We nemen snel contact met je op.</p>
+    <button onclick="sluitPopup()">Sluiten</button>
+  </div>
+
+  <script>
+    // Product afbeeldingen
+    const afbeeldingen = [
+      { src: 'shirt-voor.jpeg', alt: 'T-shirt GewoonMasontje - voorkant' },
+      { src: 'shirt-achter.jpeg', alt: 'T-shirt GewoonMasontje - achterkant' }
+    ];
+    let huidigeIndex = 0;
+
+    const productImage = document.getElementById('productImage');
+
+    function updateAfbeelding() {
+      productImage.style.opacity = 0;
+      setTimeout(() => {
+        productImage.src = afbeeldingen[huidigeIndex].src;
+        productImage.alt = afbeeldingen[huidigeIndex].alt;
+        productImage.style.opacity = 1;
+      }, 300);
+    }
+
+    function vorigeAfbeelding() {
+      huidigeIndex = (huidigeIndex - 1 + afbeeldingen.length) % afbeeldingen.length;
+      updateAfbeelding();
+    }
+
+    function volgendeAfbeelding() {
+      huidigeIndex = (huidigeIndex + 1) % afbeeldingen.length;
+      updateAfbeelding();
+    }
+
+    // Popup bestelling
+    const popup = document.getElementById('popup');
+
+    function bestelProduct() {
+      const maat = document.getElementById('maat').value;
+      const opmerkingen = document.getElementById('opmerkingen').value;
+      alert(`Je hebt besteld:\nT-shirt GewoonMasontje\nMaat: ${maat}\nOpmerkingen: ${opmerkingen || 'Geen'}`);
+      popup.classList.add('show');
+    }
+
+    function sluitPopup() {
+      popup.classList.remove('show');
+    }
+
+    // Abonneeteller ophalen van backend
+    const abonneesElement = document.getElementById('subs');
+    fetch('/api/abonnees')
+      .then(response => response.json())
+      .then(data => {
+        abonneesElement.textContent = `Abonnees: ${Number(data.subscribers).toLocaleString()}`;
+      })
+      .catch(() => {
+        abonneesElement.textContent = 'Abonnees: Niet beschikbaar';
+      });
+
+    // Nieuwsbrief functie
+    function meldAan() {
+      const naam = document.getElementById('naam').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (!naam || !email) {
+        alert('Vul alstublieft naam en e-mailadres in.');
+        return;
+      }
+      alert(`Bedankt voor je aanmelding, ${naam}!`);
+      document.getElementById('naam').value = '';
+      document.getElementById('email').value = '';
+    }
+  </script>
+
+</body>
+</html>
