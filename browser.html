@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GewoonBrowser – Jouw Eigen Browser</title>
+  <style>
+    :root {
+      --orange: #ff6600;
+      --dark: #111;
+      --light: #fff;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: var(--orange);
+      color: white;
+      padding: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .container {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h1 {
+      color: var(--orange);
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin: 25px 0;
+      padding: 14px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: var(--orange);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .download-btn:hover {
+      background-color: #cc5200;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px var(--orange);
+    }
+
+    img {
+      margin-top: 30px;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <header>GewoonBrowser</header>
+
+  <div class="container">
+    <h1>Dit is mijn browser</h1>
+    <p>
+      Welkom bij <strong>GewoonBrowser</strong> – een unieke browser die ik zelf heb gemaakt met Python!  
+      De browser zit nog in <strong>BETA</strong>, dus sommige functies werken nog niet perfect.
+    </p>
+
+    <p>
+      Je kunt de browser hieronder downloaden en uitproberen.  
+      Vind je een bug? Laat het me zeker weten – dan verbeter ik het in de volgende versie!
+    </p>
+
+    <a class="download-btn" href="gewoonbrowser.exe" download>⬇️ Download GewoonBrowser.exe</a>
+
+    <p>
+      <strong>Bekende bugs (BETA):</strong><br>
+      ❌ De volgende websites werken nog niet goed:<br>
+      – <a href="https://jeugdjournaal.nl" target="_blank">jeugdjournaal.nl</a><br>
+      – <a href="https://chatgpt.com" target="_blank">chatgpt.com</a><br><br>
+      ✅ Maar alle websites van Google werken perfect!
+    </p>
+
+    <img src="browser.png" alt="Screenshot van GewoonBrowser" />
+  </div>
+
+</body>
+</html>
