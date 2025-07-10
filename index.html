@@ -1,277 +1,247 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GewoonMasontje | Home</title>
+  <meta charset="UTF-8">
+  <title>Reken maar uit!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    :root {
-      --main-orange: #ff6600;
-      --dark: #111;
-      --light: #fff;
-    }
-
-    * {
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      height: 100%;
+      overflow: hidden;
+      font-family: Comic Sans MS, sans-serif;
     }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #f4f4f4);
-      color: var(--dark);
-      scroll-behavior: smooth;
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      font-size: 2rem;
     }
 
-    header {
-      background-color: var(--main-orange);
-      padding: 20px 40px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-      animation: slideDown 0.6s ease-out;
-    }
-
-    nav {
+    .visible {
       display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
     }
 
-    nav a {
+    #page1 {
+      background-image: url('rekenen.jpeg');
+      background-size: cover;
+      background-position: center;
       color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 18px;
-      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+      text-shadow: 2px 2px 5px black;
+      font-size: 3rem;
     }
 
-    nav a:hover {
-      color: black;
-      text-shadow: 0 0 6px white;
-      transform: scale(1.08);
+    #page2 {
+      background-image: url('rekenen.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      font-size: 2.5rem;
+      text-shadow: 1px 1px 3px black;
     }
 
-    .container {
-      padding: 60px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .hero {
-      text-align: center;
-      animation: fadeIn 1s ease;
-    }
-
-    .hero img {
-      width: 260px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .hero img:hover {
-      transform: scale(1.05);
-    }
-
-    .hero h1 {
-      font-size: 42px;
-      color: var(--main-orange);
-      margin: 25px 0 15px;
-      animation: popIn 1.2s ease;
-    }
-
-    .hero p {
-      font-size: 20px;
+    #page3 {
+      background-color: #c8e6c9;
       color: #333;
-      margin-bottom: 25px;
     }
 
-    .cta-button {
+    #page3 img {
+      max-width: 300px;
+      width: 90%;
+      margin: 20px 0;
+    }
+
+    #page3 a {
       display: inline-block;
-      background-color: var(--main-orange);
+      padding: 10px 20px;
+      background-color: #ffae00;
       color: white;
-      padding: 14px 30px;
-      border-radius: 30px;
       text-decoration: none;
-      font-size: 18px;
+      border-radius: 10px;
       font-weight: bold;
-      transition: 0.3s;
-      animation: popIn 1.3s ease;
     }
 
-    .cta-button:hover {
-      background-color: #cc5200;
-      transform: scale(1.05);
-      box-shadow: 0 0 10px var(--main-orange);
+    #page4, #page6, #page7 {
+      background-color: #bbdefb;
+      color: #333;
     }
 
-    section {
-      margin-top: 70px;
-      opacity: 0;
-      transform: translateY(50px);
-      animation: slideUp 1s forwards;
+    #page4 p, #page6 p, #page7 p {
+      max-width: 600px;
     }
 
-    section h2 {
-      font-size: 28px;
-      color: var(--main-orange);
-      margin-bottom: 15px;
+    #page5 {
+      background-color: #d1c4e9;
     }
 
-    section p {
-      font-size: 18px;
-      color: #222;
-      margin-bottom: 10px;
-    }
-
-    footer {
-      margin-top: 100px;
-      padding: 30px;
-      background-color: #f0f0f0;
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
       text-align: center;
-      font-size: 14px;
-      color: #777;
     }
 
-    /* Animaties */
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+    .arrow {
+      font-size: 2rem;
+      background: #000000aa;
+      color: rgb(0, 0, 0);
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      cursor: pointer;
+      border-radius: 5px;
     }
 
-    @keyframes slideDown {
-      from {
-        transform: translateY(-100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+    .arrow:hover {
+      background: #000000dd;
     }
 
-    @keyframes slideUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Popup */
+    #popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
     }
 
-    @keyframes popIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+    #popupContent {
+      background: rgb(25, 0, 253);
+      color: black;
+      width: 90%;
+      height: 90%;
+      padding: 20px;
+      border-radius: 15px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        gap: 15px;
-      }
+    #popupContent h2 {
+      margin-top: 0;
+    }
 
-      .hero img {
-        width: 90%;
-      }
+    .popup-page {
+      display: none;
+    }
 
-      .hero h1 {
-        font-size: 30px;
-      }
+    .popup-page.visible {
+      display: block;
+    }
 
-      .hero p {
-        font-size: 17px;
-      }
+    .close-btn, .popup-arrow {
+      position: absolute;
+      top: 10px;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .close-btn {
+      right: 20px;
+      color: red;
+    }
+
+    .popup-arrow.left {
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .popup-arrow.right {
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="overons.html">Over ons</a>
-      <a href="contact.html">Contact</a>
-      <a href="producties.html">Producties</a>
-      <a href="shop.html">Shop</a>
-      <a href="browser.html">Browser</a>
-    </nav>
-  </header>
+  <div id="page1" class="page visible">Reken maar uit! Les 1</div>
+  <div id="page2" class="page">Reken de sommen uit! een voorbeeld: 853+421=....</div>
 
-  <div class="container">
-    <div class="hero">
-      <img src="logo.jpg" alt="Logo GewoonMasontje">
-      <h1>Welkom bij GewoonMasontje</h1>
-      <p>Hier draait alles om creativiteit, technologie en passie voor verhalen.</p>
-      <a class="cta-button" href="https://www.youtube.com/@GewoonMasontje" target="_blank">🎥 Bekijk ons YouTube-kanaal</a>
-    </div>
-
-    <section>
-      <h2>🎥 Wie zijn wij?</h2>
-      <p>
-        GewoonMasontje is gestart als een YouTube-kanaal, maar is uitgegroeid tot een creatief platform voor films, animaties, games en software.
-        Van Minecraft tot volledige filmscripts en van browsers tot Roblox-ervaringen — wij bouwen het allemaal zelf, met liefde voor het vak.
-      </p>
-      <p>
-        Wat ons uniek maakt? Alles wat je ziet is zelf geprogrammeerd, ontworpen of geschreven — met geen enkel stukje gekopieerd werk.
-      </p>
-    </section>
-
-    <section>
-      <h2>🛠️ Wat we maken</h2>
-      <p>
-        Onze producties zijn breed: we werken aan:
-        <ul>
-          <li>🎬 Films zoals "Ace, De Heldenhond"</li>
-          <li>🕹️ Roblox-games met huisdieren, gevechten en eierensystemen</li>
-          <li>🧮 Educatieve tools voor rekenen, tekenen en meer</li>
-          <li>🌐 Browsers, shops en webapps met unieke styling</li>
-        </ul>
-      </p>
-    </section>
-
-    <section>
-      <h2>🌍 Onze Missie</h2>
-      <p>
-        Wij willen jonge makers inspireren om zelf te leren programmeren, ontwerpen en creëren. Alles is mogelijk als je begint met een idee en de drive om te leren.
-      </p>
-      <p>
-        Van een lege pagina tot een game met miljoenen blokken — we laten zien dat jij dat ook kunt.
-      </p>
-    </section>
-
-    <section>
-      <h2>📢 Leuke Weetjes</h2>
-      <p>
-        Wist je dat onze grootste game meer dan <strong>1.000.000 regels code</strong> bevat? En dat we zelfs een eigen browser hebben gebouwd in Python? Met een startpagina, nieuws en zoekbalk!
-      </p>
-      <p>
-        Ook werken we aan interactieve webtools waarmee je live kunt tekenen, lessen geven of zelfs simulaties bouwen!
-      </p>
-    </section>
-
-    <section>
-      <h2>👥 Word onderdeel van onze community</h2>
-      <p>
-        We geloven in openheid. Of je nu een kijker bent of zelf wilt leren programmeren — sluit je aan bij onze community en groei met ons mee.
-      </p>
-      <p>
-        Bekijk ons YouTube-kanaal, reageer op video’s, of stuur je projectideeën. Wij luisteren altijd!
-      </p>
-    </section>
-
-    <section>
-      <h2>🛒 Binnenkort: De GewoonShop</h2>
-      <p>
-        We zijn bezig met een officiële shop vol unieke designs, posters en goodies van onze projecten. Alles in beperkte oplage.
-        Stay tuned!
-      </p>
-    </section>
+  <div id="page3" class="page">
+    <h2>Het werkboek</h2>
+    <a href="werkboek.pdf" download>📄 Download</a>
   </div>
 
-  <footer>
-    &copy; 2025 GewoonMasontje. Gebouwd met passie, plezier en Python.
-  </footer>
+  <div id="page4" class="page">
+    <h2>speel memory</h2>
+    <p>Maak eerst de memory. en speel het daarna.</p>
+  </div>
 
+  <div class="controls">
+    <button class="arrow" onclick="prevPage()">⬅</button>
+    <button class="arrow" onclick="nextPage()">➡</button>
+  </div>
+
+  <script>
+    const pages = document.querySelectorAll('.page');
+    let currentPage = 0;
+
+    function showPage(index) {
+      pages.forEach((page, i) => {
+        page.classList.toggle('visible', i === index);
+      });
+    }
+
+    function nextPage() {
+      currentPage = (currentPage + 1) % pages.length;
+      showPage(currentPage);
+    }
+
+    function prevPage() {
+      currentPage = (currentPage - 1 + pages.length) % pages.length;
+      showPage(currentPage);
+    }
+
+    // Popup
+    let popup = document.getElementById('popup');
+    let popupPages = document.querySelectorAll('.popup-page');
+    let popupIndex = 0;
+
+    function openPopup() {
+      popup.style.display = 'flex';
+      showPopupPage(0);
+    }
+
+    function closePopup() {
+      popup.style.display = 'none';
+    }
+
+    function showPopupPage(index) {
+      popupPages.forEach((pg, i) => {
+        pg.classList.toggle('visible', i === index);
+      });
+      popupIndex = index;
+    }
+
+    function nextPopupPage() {
+      popupIndex = (popupIndex + 1) % popupPages.length;
+      showPopupPage(popupIndex);
+    }
+
+    function prevPopupPage() {
+      popupIndex = (popupIndex - 1 + popupPages.length) % popupPages.length;
+      showPopupPage(popupIndex);
+    }
+  </script>
 </body>
 </html>
