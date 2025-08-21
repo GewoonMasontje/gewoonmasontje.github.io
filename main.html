@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>GewoonBot Controlecentrum</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body { font-family: Arial, sans-serif; background: #f4f4f4; margin:0; padding:0; }
+header { background:#222; color:white; padding:15px; font-size:24px; text-align:center; }
+nav { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:15px 0; }
+nav button { padding:10px 15px; border:none; border-radius:6px; background:#0078d7; color:white; cursor:pointer; }
+nav button.active { background:#ff8800; }
+section { display:none; padding:20px; }
+section.active { display:block; }
+.stat-box { background:white; padding:15px; margin:10px auto; border-radius:10px; max-width:1000px; box-shadow:0 4px 6px rgba(0,0,0,0.2); }
+canvas { width:100% !important; max-width:700px; height:300px !important; margin:20px auto; display:block; }
+.grid { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+button.action { background:#0078d7; color:white; border:none; padding:10px 15px; border-radius:6px; cursor:pointer; transition:0.3s; }
+button.action:hover { background:#005ea3; }
+video, audio { width:45%; margin:10px; border-radius:10px; }
+pre { background:#111; color:#0f0; padding:15px; border-radius:10px; max-height:200px; overflow-y:auto; }
+</style>
+</head>
+<body>
+
+<header>🤖 GewoonBot Controlecentrum</header>
+
+<nav>
+  <button class="tab active" data-tab="info">ℹ️ Info</button>
+  <button class="tab" data-tab="map">🗺️ Locatie</button>
+  <button class="tab" data-tab="controls">🎮 Besturing</button>
+  <button class="tab" data-tab="cameras">📷 Camera’s</button>
+  <button class="tab" data-tab="audio">🎤 Audio</button>
+  <button class="tab" data-tab="logs">📜 Logs</button>
+  <button class="tab" data-tab="stats">📈 Statistieken</button>
+</nav>
+
+<section id="info" class="active">
+  <div class="stat-box">
+    <img src="robot.jpeg" alt="GewoonBot" style="width:200px; border-radius:15px; display:block; margin:0 auto;">
+    <h2 style="text-align:center;">Naam: GewoonBot</h2>
+    <p><b>IP-adres:</b> 192.168.1.50</p>
+    <p id="verbinding"><b>Verbinding:</b> Controleren...</p>
+    <p id="statusText"><b>Status:</b> Laden...</p>
+    <p id="adres"><b>Adres:</b> Onbekend</p>
+    <p id="kamer"><b>Kamer:</b> Onbekend</p>
+  </div>
+</section>
+
+<section id="map">
+  <div id="mapid" style="height:400px;"></div>
+</section>
+
+<section id="controls">
+  <div class="grid">
+    <button class="action" data-cmd="come">Kom naar mij</button>
+    <button class="action" data-cmd="shutdown">Zet uit</button>
+    <button class="action" data-cmd="charge">Opladen</button>
+    <button class="action" data-cmd="music">Speel muziek</button>
+    <button class="action" data-cmd="dance">Dansmodus</button>
+    <button class="action" data-cmd="lights_on">Lampen aan</button>
+    <button class="action" data-cmd="lights_off">Lampen uit</button>
+    <button class="action" data-cmd="speed_up">Snelheid +</button>
+    <button class="action" data-cmd="speed_down">Snelheid -</button>
+    <button class="action" data-cmd="stop">⛔ Noodstop</button>
+    <!-- Je kan hier tientallen extra knoppen toevoegen met data-cmd -->
+  </div>
+</section>
+
+<section id="cameras">
+  <div class="stat-box">
+    <h3>Camera’s</h3>
+    <video src="http://192.168.1.50/cam1" autoplay muted controls></video>
+    <video src="http://192.168.1.50/cam2" autoplay muted controls></video>
+  </div>
+</section>
+
+<section id="audio">
+  <div class="stat-box">
+    <h3>Audio Stream</h3>
+    <audio controls autoplay src="http://192.168.1.50/audio"></audio>
+  </div>
+</section>
+
+<section id="logs">
+  <div class="stat-box">
+    <h3>Logboek</h3>
+    <pre id="logdata">Laden...</pre>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="stat-box">
+    <h3>Batterijstatus (lijndiagram)</h3>
+    <canvas id="batteryChart"></canvas>
+  </div>
+  <div class="stat-box">
+    <h3>Commando’s per uur (bar chart)</h3>
+    <canvas id="commandsChart"></canvas>
+  </div>
+  <div class="stat-box">
+    <h3>Live Status</h3>
+    <p id="cpu">CPU: laden...</p>
+    <p id="temp">Temperatuur: laden...</p>
+    <p id="batt">Batterij: laden...</p>
+  </div>
+</section>
+
+<audio id="alarm" src="alarm.mp3" preload="auto"></audio>
+
+<script>
+const robotIP = "192.168.1.50";
+
+// DOM elementen
+const verbindingEl = document.getElementById("verbinding");
+const statusEl = document.getElementById("statusText");
+const adresEl = document.getElementById("adres");
+const kamerEl = document.getElementById("kamer");
+const logEl = document.getElementById("logdata");
+const cpuEl = document.getElementById("cpu");
+const tempEl = document.getElementById("temp");
+const battEl = document.getElementById("batt");
+const alarmSound = document.getElementById("alarm");
+
+// Tabs
+const tabs = document.querySelectorAll(".tab");
+const sections = document.querySelectorAll("section");
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    sections.forEach(s => s.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.tab).classList.add("active");
+  });
+});
+
+// Leaflet kaart
+const map = L.map('mapid').setView([52.37, 4.89], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+const marker = L.marker([52.37, 4.89]).addTo(map).bindPopup("GewoonBot");
+
+// Charts
+const batteryChart = new Chart(document.getElementById("batteryChart"), {
+  type:'line',
+  data:{labels:[], datasets:[{label:'Batterij (%)', data:[], borderColor:'green', fill:false}]}
+});
+const commandsChart = new Chart(document.getElementById("commandsChart"), {
+  type:'bar',
+  data:{labels:["0u","1u","2u","3u","4u","5u","6u"], datasets:[{label:'Commando’s', data:[5,3,8,2,6,4,9], backgroundColor:'orange'}]}
+});
+
+// Alarm
+function playAlarm(){ alarmSound.play(); }
+
+// Knoppen event listeners
+document.querySelectorAll('.action').forEach(button => {
+  button.addEventListener('click', () => {
+    const command = button.getAttribute('data-cmd');
+    sendCommand(command);
+  });
+});
+
+// Commando sturen
+async function sendCommand(command){
+  try{
+    const res = await fetch(`http://${robotIP}/command?cmd=${command}`);
+    const data = await res.text();
+    alert("Reactie van GewoonBot: " + data);
+  }catch{
+    alert("Robot niet bereikbaar!");
+  }
+}
+
+// Status updaten
+async function updateStatus(){
+  try{
+    const res = await fetch(`http://${robotIP}/status`);
+    const data = await res.json();
+
+    verbindingEl.innerHTML = "<b>Verbinding:</b> ✅ Verbonden";
+
+    if(data.status === "panic"){
+      statusEl.innerHTML = "<b>Status:</b> 🚨 PANIEK!";
+      statusEl.style.color="red";
+      playAlarm();
+    } else{
+      statusEl.innerHTML = "<b>Status:</b> ✅ Alles rustig";
+      statusEl.style.color="green";
+    }
+
+    if(data.lat && data.lon){
+      marker.setLatLng([data.lat,data.lon]);
+      map.setView([data.lat,data.lon],18);
+      kamerEl.innerHTML = "<b>Kamer:</b> "+(data.room||"Onbekend");
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${data.lat}&lon=${data.lon}`)
+        .then(res=>res.json())
+        .then(addr=>{ adresEl.innerHTML="<b>Adres:</b> "+(addr.display_name||"Onbekend"); });
+    }
+
+    cpuEl.textContent="CPU: "+(data.cpu||0)+"%";
+    tempEl.textContent="Temperatuur: "+(data.temp||0)+"°C";
+    battEl.textContent="Batterij: "+(data.battery||0)+"%";
+
+    batteryChart.data.labels.push(new Date().toLocaleTimeString());
+    batteryChart.data.datasets[0].data.push(data.battery||0);
+    if(batteryChart.data.labels.length>10){ batteryChart.data.labels.shift(); batteryChart.data.datasets[0].data.shift(); }
+    batteryChart.update();
+
+    fetch(`http://${robotIP}/logs`)
+      .then(res=>res.text())
+      .then(logs=>logEl.textContent=logs)
+      .catch(()=>logEl.textContent="Kon logs niet laden.");
+  }catch(err){
+    verbindingEl.innerHTML="<b>Verbinding:</b> ❌ Geen verbinding";
+    verbindingEl.style.color="gray";
+    statusEl.innerHTML="<b>Status:</b> Onbekend";
+    statusEl.style.color="black";
+    cpuEl.textContent="CPU: ?";
+    tempEl.textContent="Temperatuur: ?";
+    battEl.textContent="Batterij: ?";
+    playAlarm();
+    console.error(err);
+  }
+}
+
+setInterval(updateStatus,3000);
+updateStatus();
+</script>
+</body>
+</html>
