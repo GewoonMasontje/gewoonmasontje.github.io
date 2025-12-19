@@ -1,71 +1,302 @@
-<!doctype html>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.title = 'Bestanden';
-
-    const makeAudio = () => {
-        const a = document.createElement('audio');
-        a.id = 'standaardAudio';
-        a.controls = true;
-        a.preload = 'auto';
-        a.innerHTML = '<source src="geluid.mp3" type="audio/mpeg">Je browser ondersteunt geen HTML5-audio.';
-        return a;
-    };
-
-    const makeVideo = () => {
-        const v = document.createElement('video');
-        v.id = 'standaardVideo';
-        v.controls = true;
-        v.width = 640;
-        v.height = 360;
-        v.innerHTML = '<source src="video.mp4" type="video/mp4">Je browser ondersteunt geen HTML5-video.';
-        return v;
-    };
-
-    // Voeg elementen toe aan body als ze nog niet bestaan
-    if (!document.getElementById('standaardAudio')) document.body.appendChild(makeAudio());
-    if (!document.getElementById('standaardVideo')) document.body.appendChild(makeVideo());
-});
-</script>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Intro</title>
-    <style>
-        html,body{height:100%;margin:0;background:#000;display:flex;align-items:center;justify-content:center}
-        video{max-width:100%;max-height:100%;display:block}
-        .controls{position:fixed;left:10px;bottom:10px;color:#fff;font-family:system-ui,Segoe UI,Roboto,Arial}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MdMc • Minecraft Server</title>
+
+<style>
+:root{
+    --blue:#3b82f6;
+    --blue-dark:#1e40af;
+    --bg:#eef2f7;
+    --card:#ffffff;
+    --text:#1f2937;
+    --green:#22c55e;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI, Arial, sans-serif;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+}
+
+/* HEADER */
+header{
+    background:linear-gradient(180deg,var(--blue),var(--blue-dark));
+    padding:30px 20px 90px;
+    border-bottom-left-radius:70px;
+    border-bottom-right-radius:70px;
+    text-align:center;
+}
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+nav a{
+    background:rgba(255,255,255,0.25);
+    color:white;
+    padding:8px 18px;
+    border-radius:999px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+nav a:hover{
+    background:white;
+    color:var(--blue-dark);
+}
+
+.logo{
+    font-size:64px;
+    font-weight:900;
+    color:#e0f2fe;
+    text-shadow:0 6px 0 #1e40af;
+    margin-bottom:30px;
+}
+
+.actions{
+    display:flex;
+    justify-content:center;
+    gap:50px;
+    flex-wrap:wrap;
+}
+
+.circle{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.25);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    margin:0 auto 10px;
+    color:white;
+    cursor:pointer;
+}
+
+/* CONTENT */
+main{
+    max-width:1200px;
+    margin:-70px auto 60px;
+    padding:0 20px;
+}
+
+.section{
+    margin-bottom:70px;
+}
+
+.section h2{
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:var(--card);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 12px 30px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card img, iframe{
+    width:100%;
+    height:200px;
+    border:none;
+    object-fit:cover;
+}
+
+.content{
+    padding:18px;
+    text-align:center;
+}
+
+/* STAFF */
+.staff img{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    margin-bottom:12px;
+    border:4px solid var(--blue);
+}
+
+/* BUTTON */
+.button{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 18px;
+    background:#ff0000;
+    color:white;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:25px;
+    color:#6b7280;
+}
+
+@media(max-width:600px){
+    .logo{font-size:46px}
+}
+</style>
 </head>
 <body>
-    <!-- Video bestand: intro.mp4 (zelfde map als deze index.html) -->
-    <video id="introVideo" controls playsinline preload="metadata">
-        <source src="intro.mp4" type="video/mp4">
-        Je browser ondersteunt geen HTML5-video.
-    </video>
 
-    <!-- Geluidsbestand: verhaal.mp4 (zelfde map als deze index.html) -->
-    <audio id="verhaalAudio" preload="auto">
-        <source src="verhaal.mp4" type="audio/mp4">
-        Je browser ondersteunt geen HTML5-audio.
-    </audio>
+<header>
+<nav>
+    <a href="#home">Home</a>
+    <a href="#status">Status</a>
+    <a href="#youtube">YouTube</a>
+    <a href="#staff">Staff</a>
+</nav>
 
-    <div class="controls">Speel de video om het geluid te starten</div>
+<div class="logo">MDMC</div>
 
-    <script>
-        const video = document.getElementById('introVideo');
-        const audio = document.getElementById('verhaalAudio');
+<div class="actions">
+    <div onclick="copyIP()">
+        <div class="circle">⛏️</div>
+        MdMcCity.aternos.me
+    </div>
 
-        // Start/stop audio gekoppeld aan video play/pause (gebruikersgestuurde actie vereist)
-        video.addEventListener('play', () => { audio.play().catch(()=>{}); });
-        video.addEventListener('pause', () => { audio.pause(); });
-        video.addEventListener('ended', () => { audio.pause(); audio.currentTime = 0; });
+    <div onclick="openDiscord()">
+        <div class="circle">💬</div>
+        Discord
+    </div>
+</div>
+</header>
 
-        // Als gebruiker eerst het geluid wil bedienen, toon audio-controls bij interactie
-        audio.addEventListener('play', () => {
-            if (audio.controls === false) audio.controls = true;
-        });
-    </script>
+<main>
+
+<section id="home" class="section">
+<h2>🌍 Welkom bij MdMc</h2>
+<div class="grid">
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1627855437693-0c5b0e5b47b8">
+        <div class="content">Survival • Events • Community</div>
+    </div>
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a">
+        <div class="content">Actieve staff & Discord</div>
+    </div>
+</div>
+</section>
+
+<section id="status" class="section">
+<h2>📊 Server Status</h2>
+<div class="card" style="max-width:400px;margin:auto">
+    <div class="content">
+        <h3>MdMcCity</h3>
+        <p id="server-status">⏳ Laden...</p>
+    </div>
+</div>
+</section>
+
+<section id="youtube" class="section">
+<h2>🎥 YouTube Kanalen</h2>
+<div class="grid">
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png">
+        <div class="content">
+            <h3>GewoonMasontje</h3>
+            <a class="button" href="https://www.youtube.com/@GewoonMasontje" target="_blank">
+                Bekijk kanaal
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png">
+        <div class="content">
+            <h3>DjayFun1</h3>
+            <a class="button" href="https://www.youtube.com/@DjayFun1" target="_blank">
+                Bekijk kanaal
+            </a>
+        </div>
+    </div>
+
+</div>
+</section>
+
+<section id="staff" class="section">
+<h2>🧑‍💼 Staff Team</h2>
+<div class="grid">
+
+    <div class="card staff">
+        <div class="content">
+            <img src="https://mc-heads.net/avatar/GewoonMasontje/256">
+            <h3>GewoonMasontje</h3>
+            <strong>Owner</strong>
+        </div>
+    </div>
+
+    <div class="card staff">
+        <div class="content">
+            <img src="https://mc-heads.net/avatar/ITSDjay/256">
+            <h3>ITSDjay</h3>
+            <strong>Co-Owner</strong>
+        </div>
+    </div>
+
+</div>
+</section>
+
+</main>
+
+<footer>
+© 2025 MdMc • Niet officieel verbonden aan Mojang
+</footer>
+
+<script>
+function copyIP(){
+    navigator.clipboard.writeText("MdMcCity.aternos.me");
+    alert("IP gekopieerd!");
+}
+
+function openDiscord(){
+    window.open("https://discord.gg/RQ67MXww","_blank");
+}
+
+async function updateServerStatus(){
+    try{
+        const r = await fetch("https://api.mcsrvstat.us/2/MdMcCity.aternos.me");
+        const d = await r.json();
+        document.getElementById("server-status").innerHTML =
+            d.online ? "🟢 Online<br>👥 "+d.players.online+" / "+d.players.max+" spelers"
+                     : "🔴 Offline";
+    }catch{
+        document.getElementById("server-status").innerHTML = "⚠️ Niet beschikbaar";
+    }
+}
+updateServerStatus();
+setInterval(updateServerStatus,30000);
+</script>
+
 </body>
 </html>
