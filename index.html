@@ -1,312 +1,142 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MdMc • Minecraft Server</title>
+    <meta charset="UTF-8">
+    <title>Brainrot World - Roblox Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root{
-    --blue:#3b82f6;
-    --blue-dark:#1e40af;
-    --bg:#eef2f7;
-    --card:#ffffff;
-    --text:#1f2937;
-    --green:#22c55e;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+            color: white;
+            text-align: center;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI, Arial, sans-serif;
-}
+        header {
+            padding: 60px 20px;
+        }
 
-body{
-    background:var(--bg);
-    color:var(--text);
-}
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
 
-/* HEADER */
-header{
-    background:linear-gradient(180deg,var(--blue),var(--blue-dark));
-    padding:30px 20px 90px;
-    border-bottom-left-radius:70px;
-    border-bottom-right-radius:70px;
-    text-align:center;
-}
+        p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
 
-nav{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-    margin-bottom:30px;
-}
+        .play-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            color: white;
+            background: #ff4500;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, background 0.2s;
+        }
 
-nav a{
-    background:rgba(255,255,255,0.25);
-    color:white;
-    padding:8px 18px;
-    border-radius:999px;
-    text-decoration:none;
-    font-weight:600;
-}
+        .play-button:hover {
+            background: #ff6a2b;
+            transform: scale(1.05);
+        }
 
-nav a:hover{
-    background:white;
-    color:var(--blue-dark);
-}
+        .timer-box {
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            display: inline-block;
+            min-width: 280px;
+        }
 
-.logo{
-    font-size:64px;
-    font-weight:900;
-    color:#e0f2fe;
-    text-shadow:0 6px 0 #1e40af;
-    margin-bottom:30px;
-}
+        .timer-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
 
-.actions{
-    display:flex;
-    justify-content:center;
-    gap:50px;
-    flex-wrap:wrap;
-}
+        .timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ffcc;
+        }
 
-.circle{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.25);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:32px;
-    margin:0 auto 10px;
-    color:white;
-    cursor:pointer;
-}
-
-/* CONTENT */
-main{
-    max-width:1200px;
-    margin:-70px auto 60px;
-    padding:0 20px;
-}
-
-.section{
-    margin-bottom:70px;
-}
-
-.section h2{
-    font-size:32px;
-    margin-bottom:20px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:var(--card);
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:0 12px 30px rgba(0,0,0,0.08);
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-6px);
-}
-
-.card img, iframe{
-    width:100%;
-    height:200px;
-    border:none;
-    object-fit:cover;
-}
-
-.content{
-    padding:18px;
-    text-align:center;
-}
-
-/* STAFF */
-.staff img{
-    width:110px;
-    height:110px;
-    border-radius:50%;
-    margin-bottom:12px;
-    border:4px solid var(--blue);
-}
-
-/* BUTTON */
-.button{
-    display:inline-block;
-    margin-top:10px;
-    padding:10px 18px;
-    background:#ff0000;
-    color:white;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:600;
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:25px;
-    color:#6b7280;
-}
-
-@media(max-width:600px){
-    .logo{font-size:46px}
-}
-</style>
+        footer {
+            margin-top: 80px;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
 
 <header>
-<nav>
-    <a href="#home">Home</a>
-    <a href="#status">Status</a>
-    <a href="#youtube">YouTube</a>
-    <a href="#staff">Staff</a>
-</nav>
+    <h1>Brainrot World</h1>
+    <p>Welkom bij Brainrot World! Speel nu de Roblox-game en mis de wekelijkse Admin Abuse niet.</p>
 
-<div class="logo">MDMC</div>
-
-<div class="actions">
-    <div onclick="copyIP()">
-        <div class="circle">⛏️</div>
-        MdMcCity.aternos.me
-    </div>
-
-    <div onclick="openDiscord()">
-        <div class="circle">💬</div>
-        Discord
-    </div>
-</div>
+    <a class="play-button" href="https://www.roblox.com/games/78374481907574/Brainrot-World" target="_blank">
+        ▶ Speel Brainrot World
+    </a>
 </header>
 
-<main>
-
-<section id="home" class="section">
-<h2>🌍 Welkom bij MdMc</h2>
-<div class="grid">
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
-        <div class="content">Survival • Events • Community</div>
-    </div>
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a">
-        <div class="content">Actieve staff & Discord</div>
-    </div>
+<div class="timer-box">
+    <div class="timer-title">Admin Abuse begint over:</div>
+    <div class="timer" id="countdown">Laden...</div>
 </div>
-</section>
-
-<section id="status" class="section">
-<h2>📊 Server Status</h2>
-<div class="card" style="max-width:400px;margin:auto">
-    <div class="content">
-        <h3>MdMcCity</h3>
-        <p id="server-status">⏳ Laden...</p>
-    </div>
-</div>
-</section>
-
-<section id="youtube" class="section">
-<h2>🎥 YouTube Kanalen</h2>
-<div class="grid">
-
-    <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png">
-        <div class="content">
-            <h3>GewoonMasontje</h3>
-            <a class="button" href="https://www.youtube.com/@GewoonMasontje" target="_blank">
-                Bekijk kanaal
-            </a>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png">
-        <div class="content">
-            <h3>Iron Wolf</h3>
-            <a class="button" href="https://www.youtube.com/@IronWolf-d2e" target="_blank">
-                Bekijk kanaal
-            </a>
-        </div>
-    </div>
-
-</div>
-</section>
-
-<section id="staff" class="section">
-<h2>🧑‍💼 Staff Team</h2>
-<div class="grid">
-
-    <div class="card staff">
-        <div class="content">
-            <img src="https://mc-heads.net/avatar/GewoonMasontje/256">
-            <h3>GewoonMasontje</h3>
-            <strong>Owner</strong>
-        </div>
-    </div>
-
-    <div class="card staff">
-        <div class="content">
-            <img src="https://mc-heads.net/avatar/ITSDjay/256">
-            <h3>Iron Wolf</h3>
-            <strong>zMod (invaller van Djay!)</strong>
-        </div>
-    </div>
-
-</div>
-</section>
-
-</main>
 
 <footer>
-© 2025 MdMc • Niet officieel verbonden aan Mojang
+    © Brainrot World – Roblox Game
 </footer>
 
 <script>
-function copyIP(){
-    navigator.clipboard.writeText("MdMcCity.aternos.me");
-    alert("IP gekopieerd!");
-}
+    function getNextSaturdayNoon() {
+        const now = new Date();
+        const result = new Date(now);
 
-function openDiscord(){
-    window.open("https://discord.gg/RQ67MXww","_blank");
-}
+        // Zaterdag = 6
+        const day = now.getDay();
+        const daysUntilSaturday = (6 - day + 7) % 7 || 7;
 
-async function updateServerStatus() {
-    try {
-        const response = await fetch("https://api.mcstatus.io/status/java/mdmccity.aternos.me");
-        const data = await response.json();
+        result.setDate(now.getDate() + daysUntilSaturday);
+        result.setHours(12, 0, 0, 0);
 
-        if (data.online) {
-            document.getElementById("server-status").innerHTML =
-                "🟢 Online<br>👥 " + data.players.online + " / " + data.players.max + " spelers" +
-                (data.motd ? "<br>" + data.motd.clean : "");
-        } else {
-            document.getElementById("server-status").innerHTML = "🔴 Offline";
+        if (result <= now) {
+            result.setDate(result.getDate() + 7);
         }
-    } catch (error) {
-        document.getElementById("server-status").innerHTML = "⚠️ Niet beschikbaar";
-        console.error("Fout bij ophalen serverstatus:", error);
+
+        return result;
     }
-}
-updateServerStatus();
-setInterval(updateServerStatus,30000);
+
+    let targetDate = getNextSaturdayNoon();
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            targetDate = getNextSaturdayNoon();
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("countdown").textContent =
+            `${days}d ${hours}u ${minutes}m ${seconds}s`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 </script>
 
 </body>
 </html>
-
-
-
-
