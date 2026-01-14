@@ -6,77 +6,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+:root{
+    --accent:#ff5a1f;
+    --glow:#ff5a1f88;
+}
+
 body{
     margin:0;
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: radial-gradient(circle at top, #1b1b1b, #050505);
+    background: linear-gradient(180deg,#0a0a0a,#050505);
     color:white;
-    text-align:center;
 }
 
+/* HEADER */
 header{
-    padding:70px 20px 40px;
+    text-align:center;
+    padding:80px 20px 60px;
 }
 
-h1{
-    font-size:3.2rem;
+header h1{
+    font-size:3.5rem;
     margin-bottom:10px;
-    text-shadow:0 0 15px #ff4500;
+    text-shadow:0 0 20px var(--glow);
 }
 
-.subtitle{
-    opacity:0.85;
+header p{
     font-size:1.2rem;
+    opacity:0.85;
 }
 
-.play{
+.play-btn{
     margin-top:35px;
     display:inline-block;
-    padding:18px 45px;
-    background:linear-gradient(135deg,#ff4500,#ff7a2f);
-    color:white;
+    padding:18px 48px;
     font-size:1.3rem;
-    border-radius:14px;
+    border-radius:16px;
     text-decoration:none;
-    box-shadow:0 0 25px rgba(255,69,0,0.6);
-    transition:0.2s;
+    color:white;
+    background:linear-gradient(135deg,var(--accent),#ff7b3a);
+    box-shadow:0 0 35px var(--glow);
+    transition:0.25s;
 }
-.play:hover{transform:scale(1.07);}
+.play-btn:hover{transform:scale(1.08);}
 
-.section{
-    margin:60px auto;
+/* SECTION TITLES */
+.section-title{
+    text-align:center;
+    font-size:2rem;
+    margin:70px 0 30px;
+}
+
+/* EVENTS */
+.events{
     max-width:900px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:30px;
+    margin:auto;
     padding:0 20px;
 }
 
-.card{
+.event-card{
     background:rgba(255,255,255,0.07);
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 0 30px rgba(0,0,0,0.6);
+    border-radius:22px;
+    padding:35px;
+    box-shadow:0 0 40px rgba(0,0,0,0.7);
+    text-align:center;
 }
 
-.card h2{
-    margin-bottom:15px;
-    font-size:1.6rem;
+.event-name{
+    font-size:2.2rem;
+    color:var(--accent);
+    margin-bottom:10px;
 }
 
-.value{
-    font-size:2.4rem;
-    color:#00ffcc;
+.event-info{
+    opacity:0.85;
+    margin-bottom:20px;
+}
+
+.timer{
+    font-size:2rem;
     font-weight:bold;
+    color:#00ffcc;
 }
 
-.small{
+/* PLAYER SECTION */
+.players{
+    margin-top:80px;
+    background:linear-gradient(180deg,#0e0e0e,#060606);
+    padding:60px 20px;
+}
+
+.player-box{
+    max-width:500px;
+    margin:auto;
+    text-align:center;
+    background:rgba(255,255,255,0.06);
+    padding:35px;
+    border-radius:22px;
+}
+
+.player-value{
+    font-size:3rem;
+    font-weight:bold;
+    color:#00ffcc;
+}
+
+.sub{
     margin-top:10px;
-    opacity:0.8;
+    opacity:0.75;
 }
 
+/* FOOTER */
 footer{
-    margin:80px 0 30px;
+    text-align:center;
+    padding:30px;
     opacity:0.6;
     font-size:0.9rem;
 }
@@ -87,46 +129,48 @@ footer{
 
 <header>
     <h1>Brainrot World</h1>
-    <div class="subtitle">
-        De ultieme chaos-game op Roblox. Events. Admin Abuse. Brainrot.
-    </div>
+    <p>Chaos. Events. Admin Abuse. De ultieme Brainrot-ervaring op Roblox.</p>
 
-    <a class="play"
+    <a class="play-btn"
        href="https://www.roblox.com/games/78374481907574/Brainrot-World"
        target="_blank">
-        ▶ Speel Brainrot World
+       ▶ Speel Brainrot World
     </a>
 </header>
 
-<!-- EVENTS + TIMER -->
-<div class="section">
+<h2 class="section-title">🎉 Events</h2>
 
-    <div class="card">
-        <h2>📅 Event</h2>
-        <div class="value">Admin Abuse</div>
-        <div class="small">Elke zaterdag om 12:00</div>
-        <div class="small" id="countdown">Laden...</div>
+<div class="events">
+    <div class="event-card">
+        <div class="event-name">Admin Abuse</div>
+        <div class="event-info">Elke zaterdag om 12:00 (Nederlandse tijd)</div>
+        <div class="timer" id="countdown">Laden...</div>
     </div>
+</div>
 
-    <div class="card">
+<!-- SPELERS ONDERAAN -->
+<div class="players">
+    <div class="player-box">
         <h2>👥 Spelers Online</h2>
-        <div class="value" id="players">Laden...</div>
-        <div class="small">
-            Record: <span id="peak">0</span>
+        <div class="player-value" id="players">Offline</div>
+        <div class="sub">
+            Hoogste gemeten: <span id="peak">0</span>
+        </div>
+        <div class="sub">
+            *Wordt automatisch vernieuwd
         </div>
     </div>
-
 </div>
 
 <footer>
-    © Brainrot World – Official Game Site
+    © Brainrot World – Official Game Website
 </footer>
 
 <script>
-/* ======================
+/* =====================
    ADMIN ABUSE TIMER
-====================== */
-function nextSaturday12(){
+===================== */
+function nextSaturday(){
     const now=new Date();
     const d=new Date(now);
     const day=now.getDay();
@@ -135,12 +179,12 @@ function nextSaturday12(){
     d.setHours(12,0,0,0);
     return d;
 }
-let target=nextSaturday12();
+let target=nextSaturday();
 
 function updateTimer(){
     const now=new Date();
     let diff=target-now;
-    if(diff<=0){target=nextSaturday12();return;}
+    if(diff<=0){target=nextSaturday();return;}
 
     const d=Math.floor(diff/86400000);
     const h=Math.floor(diff/3600000)%24;
@@ -148,18 +192,17 @@ function updateTimer(){
     const s=Math.floor(diff/1000)%60;
 
     document.getElementById("countdown").textContent=
-        `Begint over ${d}d ${h}u ${m}m ${s}s`;
+        `${d}d ${h}u ${m}m ${s}s`;
 }
 setInterval(updateTimer,1000);
 updateTimer();
 
-/* ======================
-   ROBLOX PLAYER COUNT
-   (WERKT VIA ALLORIGINS)
-====================== */
+/* =====================
+   PLAYER COUNT
+   BEST MOGELIJKE ZONDER SERVER
+===================== */
 const universeId="78374481907574";
-const api=
-`https://api.allorigins.win/raw?url=https://games.roblox.com/v1/games?universeIds=${universeId}`;
+const api=`https://api.allorigins.win/raw?url=https://games.roblox.com/v1/games?universeIds=${universeId}`;
 
 function updatePlayers(){
     fetch(api)
@@ -168,8 +211,7 @@ function updatePlayers(){
         const playing=data.data[0].playing;
         document.getElementById("players").textContent=playing;
 
-        let peak=localStorage.getItem("peakBW")||0;
-        peak=Number(peak);
+        let peak=Number(localStorage.getItem("peakBW")||0);
         if(playing>peak){
             peak=playing;
             localStorage.setItem("peakBW",peak);
