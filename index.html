@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+            background: linear-gradient(135deg, #0b0b0b, #1f1f1f);
             color: white;
             text-align: center;
         }
@@ -35,9 +35,7 @@
             font-size: 1.3rem;
             color: white;
             background: #ff4500;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            border-radius: 12px;
             text-decoration: none;
             transition: transform 0.2s, background 0.2s;
         }
@@ -47,21 +45,21 @@
             transform: scale(1.05);
         }
 
-        .timer-box {
-            margin-top: 60px;
+        .box {
+            margin: 40px auto;
             padding: 30px;
             background: rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
+            border-radius: 18px;
             display: inline-block;
-            min-width: 280px;
+            min-width: 300px;
         }
 
-        .timer-title {
+        .box-title {
             font-size: 1.5rem;
             margin-bottom: 15px;
         }
 
-        .timer {
+        .value {
             font-size: 2rem;
             font-weight: bold;
             color: #00ffcc;
@@ -79,16 +77,26 @@
 
 <header>
     <h1>Brainrot World</h1>
-    <p>Welkom bij Brainrot World! Speel nu de Roblox-game en mis de wekelijkse Admin Abuse niet.</p>
+    <p>De ultieme Brainrot Roblox-ervaring. Speel nu en mis de wekelijkse Admin Abuse niet.</p>
 
     <a class="play-button" href="https://www.roblox.com/games/78374481907574/Brainrot-World" target="_blank">
         ▶ Speel Brainrot World
     </a>
 </header>
 
-<div class="timer-box">
-    <div class="timer-title">Admin Abuse begint over:</div>
-    <div class="timer" id="countdown">Laden...</div>
+<!-- ADMIN ABUSE TIMER -->
+<div class="box">
+    <div class="box-title">Admin Abuse begint over</div>
+    <div class="value" id="countdown">Laden...</div>
+</div>
+
+<!-- SPELER TELLER -->
+<div class="box">
+    <div class="box-title">Spelers Online</div>
+    <div class="value" id="playerCount">Laden...</div>
+    <p style="margin-top:10px; opacity:0.85;">
+        Meeste tegelijk online: <span id="peakPlayers">0</span>
+    </p>
 </div>
 
 <footer>
@@ -96,46 +104,80 @@
 </footer>
 
 <script>
-    function getNextSaturdayNoon() {
-        const now = new Date();
-        const result = new Date(now);
+/* =========================
+   ADMIN ABUSE COUNTDOWN
+========================= */
+function getNextSaturdayNoon() {
+    const now = new Date();
+    const target = new Date(now);
 
-        // Zaterdag = 6
-        const day = now.getDay();
-        const daysUntilSaturday = (6 - day + 7) % 7 || 7;
+    const day = now.getDay(); // zondag = 0
+    const daysUntilSaturday = (6 - day + 7) % 7 || 7;
 
-        result.setDate(now.getDate() + daysUntilSaturday);
-        result.setHours(12, 0, 0, 0);
+    target.setDate(now.getDate() + daysUntilSaturday);
+    target.setHours(12, 0, 0, 0);
 
-        if (result <= now) {
-            result.setDate(result.getDate() + 7);
-        }
-
-        return result;
+    if (target <= now) {
+        target.setDate(target.getDate() + 7);
     }
 
-    let targetDate = getNextSaturdayNoon();
+    return target;
+}
 
-    function updateCountdown() {
-        const now = new Date();
-        const diff = targetDate - now;
+let adminAbuseTime = getNextSaturdayNoon();
 
-        if (diff <= 0) {
-            targetDate = getNextSaturdayNoon();
-            return;
-        }
+function updateCountdown() {
+    const now = new Date();
+    const diff = adminAbuseTime - now;
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-
-        document.getElementById("countdown").textContent =
-            `${days}d ${hours}u ${minutes}m ${seconds}s`;
+    if (diff <= 0) {
+        adminAbuseTime = getNextSaturdayNoon();
+        return;
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").textContent =
+        `${days}d ${hours}u ${minutes}m ${seconds}s`;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* =========================
+   ROBLOX SPELER TELLER
+========================= */
+const universeId = "78374481907574";
+const apiUrl = `https://games.roblox.com/v1/games?universeIds=${universeId}`;
+
+function updatePlayers() {
+    fetch(apiUrl)
+        .then(res => res.json())
+        .then(data => {
+            const playing = data.data[0].playing;
+
+            document.getElementById("playerCount").textContent = playing;
+
+            let peak = localStorage.getItem("peakPlayers") || 0;
+            peak = Number(peak);
+
+            if (playing > peak) {
+                peak = playing;
+                localStorage.setItem("peakPlayers", peak);
+            }
+
+            document.getElementById("peakPlayers").textContent = peak;
+        })
+        .catch(() => {
+            document.getElementById("playerCount").textContent = "Niet beschikbaar";
+        });
+}
+
+updatePlayers();
+setInterval(updatePlayers, 30000); // elke 30 seconden
 </script>
 
 </body>
