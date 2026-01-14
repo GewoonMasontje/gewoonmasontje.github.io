@@ -23,6 +23,7 @@ header p{font-size:1.2rem;opacity:0.85;}
 .player-value{font-size:3rem;font-weight:bold;color:#00ffcc;}
 .sub{margin-top:10px;opacity:0.75;}
 footer{text-align:center;padding:30px;opacity:0.6;font-size:0.9rem;}
+img.event-img{width:100%;border-radius:12px;margin-top:10px;}
 </style>
 </head>
 <body>
@@ -34,7 +35,7 @@ footer{text-align:center;padding:30px;opacity:0.6;font-size:0.9rem;}
 </header>
 
 <h2 class="section-title">🎉 Events</h2>
-<div class="events" id="events"></div>
+<div id="events" class="events"></div>
 
 <div class="players">
 <div class="player-box">
@@ -50,71 +51,54 @@ footer{text-align:center;padding:30px;opacity:0.6;font-size:0.9rem;}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-/* ================= Events setup ================= */
-const eventsData=[
-    {name:"Admin Abuse", day:6, hour:12, liveEffect:true},
-    {name:"Double Coins", day:3, hour:18, liveEffect:false},
-    {name:"Halloween Event", day:5, hour:20, liveEffect:false}
-];
+const api="/api/stats";
 
-const eventsContainer=document.getElementById("events");
+// Update events + players
+function updateUI(){
+    fetch(api).then(r=>r.json()).then(data=>{
+        // Spelers
+        document.getElementById("players").textContent=data.online;
+        document.getElementById("peak").textContent=data.peak;
 
-eventsData.forEach(ev=>{
-    const card=document.createElement("div");
-    card.className="event-card";
-    card.innerHTML=`<div class="event-name">${ev.name}</div>
-    <div class="event-info">Elke ${["Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"][ev.day]} om ${ev.hour}:00</div>
-    <div class="timer" id="timer-${ev.name.replace(/\s/g,"")}">Laden...</div>`;
-    eventsContainer.appendChild(card);
-});
-
-/* ================= Admin Abuse LIVE ================= */
-function updateTimers(){
-    const now=new Date();
-    eventsData.forEach(ev=>{
-        const timerElem=document.getElementById("timer-"+ev.name.replace(/\s/g,""));
-        const target=new Date(now);
-        const dayDiff=(ev.day-now.getDay()+7)%7||7;
-        target.setDate(now.getDate()+dayDiff);
-        target.setHours(ev.hour,0,0,0);
-        const diff=target-now;
-        if(diff<=0){
-            timerElem.textContent=ev.liveEffect?"🚨 "+ev.name+" LIVE! 🚨":"Begonnen!";
-            if(ev.liveEffect){
-                timerElem.style.color="#ff0000";
-                timerElem.style.fontWeight="bold";
+        // Events
+        const container=document.getElementById("events");
+        container.innerHTML="";
+        data.events.forEach(ev=>{
+            const card=document.createElement("div");
+            card.className="event-card";
+            const start=new Date(ev.startTime);
+            const diff=start-new Date();
+            let timerText="";
+            if(diff>0){
+                const d=Math.floor(diff/86400000);
+                const h=Math.floor(diff/3600000)%24;
+                const m=Math.floor(diff/60000)%60;
+                const s=Math.floor(diff/1000)%60;
+                timerText=`Begint over: ${d}d ${h}u ${m}m ${s}s`;
+            } else {
+                timerText="🚨 LIVE! 🚨";
             }
-        }else{
-            const d=Math.floor(diff/86400000);
-            const h=Math.floor(diff/3600000)%24;
-            const m=Math.floor(diff/60000)%60;
-            const s=Math.floor(diff/1000)%60;
-            timerElem.textContent=`${d}d ${h}u ${m}m ${s}s`;
-        }
-    });
-}
-setInterval(updateTimers,1000);
-updateTimers();
+            card.innerHTML=`<div class="event-name">${ev.name}</div>
+                              <div class="event-info">${timerText}</div>
+                              <img src="${ev.imageUrl}" class="event-img">`;
+            container.appendChild(card);
+        });
 
-/* ================= Players via server ================= */
-const api="/api/stats"; // server.js endpoint
-function updatePlayers(){
-    fetch(api)
-    .then(r=>r.json())
-    .then(d=>{
-        document.getElementById("players").textContent=d.online;
-        document.getElementById("peak").textContent=d.peak;
-
+        // Grafiek spelers
         const ctx=document.getElementById('playerChart').getContext('2d');
-        const labels=d.history.map(h=>new Date(h.time).toLocaleTimeString());
-        const data=d.history.map(h=>h.players);
+        const labels=data.history.map(h=>new Date(h.time).toLocaleTimeString());
+        const pdata=data.history.map(h=>h.players);
         if(window.chart) window.chart.destroy();
-        window.chart=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Spelers Online',data,borderColor:'#00ffcc',backgroundColor:'rgba(0,255,204,0.2)',fill:true,tension:0.3}]},options:{scales:{y:{beginAtZero:true}}}});
-    })
-    .catch(()=>{document.getElementById("players").textContent="Offline";});
+        window.chart=new Chart(ctx,{
+            type:'line',
+            data:{labels,datasets:[{label:'Spelers Online',data:pdata,borderColor:'#00ffcc',backgroundColor:'rgba(0,255,204,0.2)',fill:true,tension:0.3}]},
+            options:{scales:{y:{beginAtZero:true}}}
+        });
+    }).catch(()=>{document.getElementById("players").textContent="Offline";});
 }
-updatePlayers();
-setInterval(updatePlayers,30000);
+
+updateUI();
+setInterval(updateUI,30000);
 </script>
 
 </body>
