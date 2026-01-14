@@ -51,7 +51,7 @@
             background: rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             display: inline-block;
-            min-width: 300px;
+            min-width: 320px;
         }
 
         .box-title {
@@ -77,9 +77,11 @@
 
 <header>
     <h1>Brainrot World</h1>
-    <p>De ultieme Brainrot Roblox-ervaring. Speel nu en mis de wekelijkse Admin Abuse niet.</p>
+    <p>Speel Brainrot World op Roblox en mis de wekelijkse Admin Abuse niet.</p>
 
-    <a class="play-button" href="https://www.roblox.com/games/78374481907574/Brainrot-World" target="_blank">
+    <a class="play-button"
+       href="https://www.roblox.com/games/78374481907574/Brainrot-World"
+       target="_blank">
         ▶ Speel Brainrot World
     </a>
 </header>
@@ -149,13 +151,15 @@ setInterval(updateCountdown, 1000);
 
 /* =========================
    ROBLOX SPELER TELLER
+   MET CORS-PROXY (WERKT)
 ========================= */
 const universeId = "78374481907574";
-const apiUrl = `https://games.roblox.com/v1/games?universeIds=${universeId}`;
+const apiUrl =
+    `https://corsproxy.io/?https://games.roblox.com/v1/games?universeIds=${universeId}`;
 
 function updatePlayers() {
     fetch(apiUrl)
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
             const playing = data.data[0].playing;
 
