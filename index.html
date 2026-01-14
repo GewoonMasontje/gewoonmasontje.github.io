@@ -2,103 +2,114 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<title>Brainrot World</title>
+<title>Brainrot World - Admin Abuse Timer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(180deg,#0a0a0a,#050505);color:white;text-align:center;}
-header{padding:80px 20px 60px;}
-header h1{font-size:3.5rem;margin-bottom:10px;text-shadow:0 0 20px #ff5a1f88;}
-header p{font-size:1.2rem;opacity:0.85;}
-.play-btn{margin-top:35px;display:inline-block;padding:18px 48px;font-size:1.3rem;border-radius:16px;text-decoration:none;color:white;background:linear-gradient(135deg,#ff5a1f,#ff7b3a);box-shadow:0 0 35px #ff5a1f88;transition:0.25s;}
-.play-btn:hover{transform:scale(1.08);}
-.section-title{text-align:center;font-size:2rem;margin:70px 0 30px;}
-.events{max-width:900px;margin:auto;padding:0 20px;}
-.event-card{background:rgba(255,255,255,0.07);border-radius:22px;padding:35px;box-shadow:0 0 40px rgba(0,0,0,0.7);text-align:center;margin-bottom:30px;}
-.event-name{font-size:2.2rem;color:#ff5a1f;margin-bottom:10px;}
-.event-info{opacity:0.85;margin-bottom:20px;}
-.timer{font-size:2rem;font-weight:bold;color:#00ffcc;}
-.players{margin-top:80px;background:linear-gradient(180deg,#0e0e0e,#060606);padding:60px 20px;}
-.player-box{max-width:500px;margin:auto;text-align:center;background:rgba(255,255,255,0.06);padding:35px;border-radius:22px;}
-.player-value{font-size:3rem;font-weight:bold;color:#00ffcc;}
-.sub{margin-top:10px;opacity:0.75;}
-footer{text-align:center;padding:30px;opacity:0.6;font-size:0.9rem;}
-img.event-img{width:100%;border-radius:12px;margin-top:10px;}
+body {
+    margin:0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:linear-gradient(180deg,#0a0a0a,#050505);
+    color:white;
+    text-align:center;
+}
+header {
+    padding:100px 20px 50px;
+}
+h1 {
+    font-size:3.5rem;
+    margin-bottom:10px;
+    text-shadow:0 0 20px #ff5a1f88;
+}
+.timer-box {
+    margin-top:50px;
+    display:inline-block;
+    background:rgba(255,255,255,0.07);
+    padding:50px 70px;
+    border-radius:25px;
+    box-shadow:0 0 40px rgba(0,0,0,0.7);
+}
+.timer-box h2 {
+    font-size:2rem;
+    margin-bottom:20px;
+    color:#ff5a1f;
+}
+.timer-box .timer {
+    font-size:3rem;
+    font-weight:bold;
+    color:#00ffcc;
+}
+.timer-box .live {
+    color:#ff0000;
+    font-weight:bold;
+    font-size:3.2rem;
+}
+.play-btn {
+    margin-top:35px;
+    display:inline-block;
+    padding:18px 48px;
+    font-size:1.3rem;
+    border-radius:16px;
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(135deg,#ff5a1f,#ff7b3a);
+    box-shadow:0 0 35px #ff5a1f88;
+    transition:0.25s;
+}
+.play-btn:hover { transform:scale(1.08); }
+footer {
+    margin-top:80px;
+    padding:30px;
+    opacity:0.6;
+    font-size:0.9rem;
+}
 </style>
 </head>
 <body>
 
 <header>
 <h1>Brainrot World</h1>
-<p>Chaos. Events. Admin Abuse. De ultieme Brainrot-ervaring op Roblox.</p>
+<p>Volgende Admin Abuse Timer</p>
 <a class="play-btn" href="https://www.roblox.com/games/78374481907574/Brainrot-World" target="_blank">▶ Speel Brainrot World</a>
 </header>
 
-<h2 class="section-title">🎉 Events</h2>
-<div id="events" class="events"></div>
-
-<div class="players">
-<div class="player-box">
-<h2>👥 Spelers Online</h2>
-<div class="player-value" id="players">Offline</div>
-<div class="sub">Hoogste gemeten: <span id="peak">0</span></div>
-<div class="sub">*Wordt automatisch vernieuwd</div>
-<canvas id="playerChart" width="400" height="200"></canvas>
-</div>
+<div class="timer-box">
+<h2>Admin Abuse Timer</h2>
+<div class="timer" id="timer">Laden...</div>
 </div>
 
-<footer>© Brainrot World – Official Game Website</footer>
+<footer>© Brainrot World</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const api="/api/stats";
+// Timer naar volgende zaterdag 12:00
+function updateTimer(){
+    const now = new Date();
+    let next = new Date(now);
 
-// Update events + players
-function updateUI(){
-    fetch(api).then(r=>r.json()).then(data=>{
-        // Spelers
-        document.getElementById("players").textContent=data.online;
-        document.getElementById("peak").textContent=data.peak;
+    // Zaterdag = 6
+    const daysUntilSaturday = (6 - now.getDay() + 7) % 7;
+    next.setDate(now.getDate() + daysUntilSaturday);
+    next.setHours(12,0,0,0); // 12:00
+    const diff = next - now;
 
-        // Events
-        const container=document.getElementById("events");
-        container.innerHTML="";
-        data.events.forEach(ev=>{
-            const card=document.createElement("div");
-            card.className="event-card";
-            const start=new Date(ev.startTime);
-            const diff=start-new Date();
-            let timerText="";
-            if(diff>0){
-                const d=Math.floor(diff/86400000);
-                const h=Math.floor(diff/3600000)%24;
-                const m=Math.floor(diff/60000)%60;
-                const s=Math.floor(diff/1000)%60;
-                timerText=`Begint over: ${d}d ${h}u ${m}m ${s}s`;
-            } else {
-                timerText="🚨 LIVE! 🚨";
-            }
-            card.innerHTML=`<div class="event-name">${ev.name}</div>
-                              <div class="event-info">${timerText}</div>
-                              <img src="${ev.imageUrl}" class="event-img">`;
-            container.appendChild(card);
-        });
+    const timerElem = document.getElementById("timer");
 
-        // Grafiek spelers
-        const ctx=document.getElementById('playerChart').getContext('2d');
-        const labels=data.history.map(h=>new Date(h.time).toLocaleTimeString());
-        const pdata=data.history.map(h=>h.players);
-        if(window.chart) window.chart.destroy();
-        window.chart=new Chart(ctx,{
-            type:'line',
-            data:{labels,datasets:[{label:'Spelers Online',data:pdata,borderColor:'#00ffcc',backgroundColor:'rgba(0,255,204,0.2)',fill:true,tension:0.3}]},
-            options:{scales:{y:{beginAtZero:true}}}
-        });
-    }).catch(()=>{document.getElementById("players").textContent="Offline";});
+    // ADMIN ABUSE LIVE 30 minuten
+    const liveEnd = 30*60*1000; // 30 minuten in ms
+    if(diff <= 0 && diff > -liveEnd){
+        timerElem.textContent = "🚨 ADMIN ABUSE LIVE! 🚨";
+        timerElem.classList.add("live");
+    } else {
+        timerElem.classList.remove("live");
+        const d = Math.floor(diff/86400000);
+        const h = Math.floor(diff/3600000)%24;
+        const m = Math.floor(diff/60000)%60;
+        const s = Math.floor(diff/1000)%60;
+        timerElem.textContent = `${d}d ${h}u ${m}m ${s}s`;
+    }
 }
 
-updateUI();
-setInterval(updateUI,30000);
+updateTimer();
+setInterval(updateTimer,1000);
 </script>
 
 </body>
