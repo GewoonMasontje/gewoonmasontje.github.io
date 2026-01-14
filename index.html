@@ -1,187 +1,187 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <title>Brainrot World - Roblox Game</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Brainrot World</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #0b0b0b, #1f1f1f);
-            color: white;
-            text-align: center;
-        }
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: radial-gradient(circle at top, #1b1b1b, #050505);
+    color:white;
+    text-align:center;
+}
 
-        header {
-            padding: 60px 20px;
-        }
+header{
+    padding:70px 20px 40px;
+}
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
+h1{
+    font-size:3.2rem;
+    margin-bottom:10px;
+    text-shadow:0 0 15px #ff4500;
+}
 
-        p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
+.subtitle{
+    opacity:0.85;
+    font-size:1.2rem;
+}
 
-        .play-button {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 18px 40px;
-            font-size: 1.3rem;
-            color: white;
-            background: #ff4500;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: transform 0.2s, background 0.2s;
-        }
+.play{
+    margin-top:35px;
+    display:inline-block;
+    padding:18px 45px;
+    background:linear-gradient(135deg,#ff4500,#ff7a2f);
+    color:white;
+    font-size:1.3rem;
+    border-radius:14px;
+    text-decoration:none;
+    box-shadow:0 0 25px rgba(255,69,0,0.6);
+    transition:0.2s;
+}
+.play:hover{transform:scale(1.07);}
 
-        .play-button:hover {
-            background: #ff6a2b;
-            transform: scale(1.05);
-        }
+.section{
+    margin:60px auto;
+    max-width:900px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:30px;
+    padding:0 20px;
+}
 
-        .box {
-            margin: 40px auto;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            display: inline-block;
-            min-width: 320px;
-        }
+.card{
+    background:rgba(255,255,255,0.07);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 0 30px rgba(0,0,0,0.6);
+}
 
-        .box-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
+.card h2{
+    margin-bottom:15px;
+    font-size:1.6rem;
+}
 
-        .value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #00ffcc;
-        }
+.value{
+    font-size:2.4rem;
+    color:#00ffcc;
+    font-weight:bold;
+}
 
-        footer {
-            margin-top: 80px;
-            padding: 20px;
-            font-size: 0.9rem;
-            opacity: 0.6;
-        }
-    </style>
+.small{
+    margin-top:10px;
+    opacity:0.8;
+}
+
+footer{
+    margin:80px 0 30px;
+    opacity:0.6;
+    font-size:0.9rem;
+}
+</style>
 </head>
+
 <body>
 
 <header>
     <h1>Brainrot World</h1>
-    <p>Speel Brainrot World op Roblox en mis de wekelijkse Admin Abuse niet.</p>
+    <div class="subtitle">
+        De ultieme chaos-game op Roblox. Events. Admin Abuse. Brainrot.
+    </div>
 
-    <a class="play-button"
+    <a class="play"
        href="https://www.roblox.com/games/78374481907574/Brainrot-World"
        target="_blank">
         ▶ Speel Brainrot World
     </a>
 </header>
 
-<!-- ADMIN ABUSE TIMER -->
-<div class="box">
-    <div class="box-title">Admin Abuse begint over</div>
-    <div class="value" id="countdown">Laden...</div>
-</div>
+<!-- EVENTS + TIMER -->
+<div class="section">
 
-<!-- SPELER TELLER -->
-<div class="box">
-    <div class="box-title">Spelers Online</div>
-    <div class="value" id="playerCount">Laden...</div>
-    <p style="margin-top:10px; opacity:0.85;">
-        Meeste tegelijk online: <span id="peakPlayers">0</span>
-    </p>
+    <div class="card">
+        <h2>📅 Event</h2>
+        <div class="value">Admin Abuse</div>
+        <div class="small">Elke zaterdag om 12:00</div>
+        <div class="small" id="countdown">Laden...</div>
+    </div>
+
+    <div class="card">
+        <h2>👥 Spelers Online</h2>
+        <div class="value" id="players">Laden...</div>
+        <div class="small">
+            Record: <span id="peak">0</span>
+        </div>
+    </div>
+
 </div>
 
 <footer>
-    © Brainrot World – Roblox Game
+    © Brainrot World – Official Game Site
 </footer>
 
 <script>
-/* =========================
-   ADMIN ABUSE COUNTDOWN
-========================= */
-function getNextSaturdayNoon() {
-    const now = new Date();
-    const target = new Date(now);
-
-    const day = now.getDay(); // zondag = 0
-    const daysUntilSaturday = (6 - day + 7) % 7 || 7;
-
-    target.setDate(now.getDate() + daysUntilSaturday);
-    target.setHours(12, 0, 0, 0);
-
-    if (target <= now) {
-        target.setDate(target.getDate() + 7);
-    }
-
-    return target;
+/* ======================
+   ADMIN ABUSE TIMER
+====================== */
+function nextSaturday12(){
+    const now=new Date();
+    const d=new Date(now);
+    const day=now.getDay();
+    const add=(6-day+7)%7||7;
+    d.setDate(now.getDate()+add);
+    d.setHours(12,0,0,0);
+    return d;
 }
+let target=nextSaturday12();
 
-let adminAbuseTime = getNextSaturdayNoon();
+function updateTimer(){
+    const now=new Date();
+    let diff=target-now;
+    if(diff<=0){target=nextSaturday12();return;}
 
-function updateCountdown() {
-    const now = new Date();
-    const diff = adminAbuseTime - now;
+    const d=Math.floor(diff/86400000);
+    const h=Math.floor(diff/3600000)%24;
+    const m=Math.floor(diff/60000)%60;
+    const s=Math.floor(diff/1000)%60;
 
-    if (diff <= 0) {
-        adminAbuseTime = getNextSaturdayNoon();
-        return;
-    }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-
-    document.getElementById("countdown").textContent =
-        `${days}d ${hours}u ${minutes}m ${seconds}s`;
+    document.getElementById("countdown").textContent=
+        `Begint over ${d}d ${h}u ${m}m ${s}s`;
 }
+setInterval(updateTimer,1000);
+updateTimer();
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
+/* ======================
+   ROBLOX PLAYER COUNT
+   (WERKT VIA ALLORIGINS)
+====================== */
+const universeId="78374481907574";
+const api=
+`https://api.allorigins.win/raw?url=https://games.roblox.com/v1/games?universeIds=${universeId}`;
 
-/* =========================
-   ROBLOX SPELER TELLER
-   MET CORS-PROXY (WERKT)
-========================= */
-const universeId = "78374481907574";
-const apiUrl =
-    `https://corsproxy.io/?https://games.roblox.com/v1/games?universeIds=${universeId}`;
+function updatePlayers(){
+    fetch(api)
+    .then(r=>r.json())
+    .then(data=>{
+        const playing=data.data[0].playing;
+        document.getElementById("players").textContent=playing;
 
-function updatePlayers() {
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const playing = data.data[0].playing;
-
-            document.getElementById("playerCount").textContent = playing;
-
-            let peak = localStorage.getItem("peakPlayers") || 0;
-            peak = Number(peak);
-
-            if (playing > peak) {
-                peak = playing;
-                localStorage.setItem("peakPlayers", peak);
-            }
-
-            document.getElementById("peakPlayers").textContent = peak;
-        })
-        .catch(() => {
-            document.getElementById("playerCount").textContent = "Niet beschikbaar";
-        });
+        let peak=localStorage.getItem("peakBW")||0;
+        peak=Number(peak);
+        if(playing>peak){
+            peak=playing;
+            localStorage.setItem("peakBW",peak);
+        }
+        document.getElementById("peak").textContent=peak;
+    })
+    .catch(()=>{
+        document.getElementById("players").textContent="Offline";
+    });
 }
-
 updatePlayers();
-setInterval(updatePlayers, 30000); // elke 30 seconden
+setInterval(updatePlayers,30000);
 </script>
 
 </body>
