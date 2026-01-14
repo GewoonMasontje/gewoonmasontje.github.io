@@ -6,221 +6,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{
-    --accent:#ff5a1f;
-    --glow:#ff5a1f88;
-}
-
-body{
-    margin:0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(180deg,#0a0a0a,#050505);
-    color:white;
-}
-
-/* HEADER */
-header{
-    text-align:center;
-    padding:80px 20px 60px;
-}
-
-header h1{
-    font-size:3.5rem;
-    margin-bottom:10px;
-    text-shadow:0 0 20px var(--glow);
-}
-
-header p{
-    font-size:1.2rem;
-    opacity:0.85;
-}
-
-.play-btn{
-    margin-top:35px;
-    display:inline-block;
-    padding:18px 48px;
-    font-size:1.3rem;
-    border-radius:16px;
-    text-decoration:none;
-    color:white;
-    background:linear-gradient(135deg,var(--accent),#ff7b3a);
-    box-shadow:0 0 35px var(--glow);
-    transition:0.25s;
-}
+body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(180deg,#0a0a0a,#050505);color:white;text-align:center;}
+header{padding:80px 20px 60px;}
+header h1{font-size:3.5rem;margin-bottom:10px;text-shadow:0 0 20px #ff5a1f88;}
+header p{font-size:1.2rem;opacity:0.85;}
+.play-btn{margin-top:35px;display:inline-block;padding:18px 48px;font-size:1.3rem;border-radius:16px;text-decoration:none;color:white;background:linear-gradient(135deg,#ff5a1f,#ff7b3a);box-shadow:0 0 35px #ff5a1f88;transition:0.25s;}
 .play-btn:hover{transform:scale(1.08);}
-
-/* SECTION TITLES */
-.section-title{
-    text-align:center;
-    font-size:2rem;
-    margin:70px 0 30px;
-}
-
-/* EVENTS */
-.events{
-    max-width:900px;
-    margin:auto;
-    padding:0 20px;
-}
-
-.event-card{
-    background:rgba(255,255,255,0.07);
-    border-radius:22px;
-    padding:35px;
-    box-shadow:0 0 40px rgba(0,0,0,0.7);
-    text-align:center;
-}
-
-.event-name{
-    font-size:2.2rem;
-    color:var(--accent);
-    margin-bottom:10px;
-}
-
-.event-info{
-    opacity:0.85;
-    margin-bottom:20px;
-}
-
-.timer{
-    font-size:2rem;
-    font-weight:bold;
-    color:#00ffcc;
-}
-
-/* PLAYER SECTION */
-.players{
-    margin-top:80px;
-    background:linear-gradient(180deg,#0e0e0e,#060606);
-    padding:60px 20px;
-}
-
-.player-box{
-    max-width:500px;
-    margin:auto;
-    text-align:center;
-    background:rgba(255,255,255,0.06);
-    padding:35px;
-    border-radius:22px;
-}
-
-.player-value{
-    font-size:3rem;
-    font-weight:bold;
-    color:#00ffcc;
-}
-
-.sub{
-    margin-top:10px;
-    opacity:0.75;
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:30px;
-    opacity:0.6;
-    font-size:0.9rem;
-}
+.section-title{text-align:center;font-size:2rem;margin:70px 0 30px;}
+.events{max-width:900px;margin:auto;padding:0 20px;}
+.event-card{background:rgba(255,255,255,0.07);border-radius:22px;padding:35px;box-shadow:0 0 40px rgba(0,0,0,0.7);text-align:center;margin-bottom:30px;}
+.event-name{font-size:2.2rem;color:#ff5a1f;margin-bottom:10px;}
+.event-info{opacity:0.85;margin-bottom:20px;}
+.timer{font-size:2rem;font-weight:bold;color:#00ffcc;}
+.players{margin-top:80px;background:linear-gradient(180deg,#0e0e0e,#060606);padding:60px 20px;}
+.player-box{max-width:500px;margin:auto;text-align:center;background:rgba(255,255,255,0.06);padding:35px;border-radius:22px;}
+.player-value{font-size:3rem;font-weight:bold;color:#00ffcc;}
+.sub{margin-top:10px;opacity:0.75;}
+footer{text-align:center;padding:30px;opacity:0.6;font-size:0.9rem;}
 </style>
 </head>
-
 <body>
 
 <header>
-    <h1>Brainrot World</h1>
-    <p>Chaos. Events. Admin Abuse. De ultieme Brainrot-ervaring op Roblox.</p>
-
-    <a class="play-btn"
-       href="https://www.roblox.com/games/78374481907574/Brainrot-World"
-       target="_blank">
-       ▶ Speel Brainrot World
-    </a>
+<h1>Brainrot World</h1>
+<p>Chaos. Events. Admin Abuse. De ultieme Brainrot-ervaring op Roblox.</p>
+<a class="play-btn" href="https://www.roblox.com/games/78374481907574/Brainrot-World" target="_blank">▶ Speel Brainrot World</a>
 </header>
 
 <h2 class="section-title">🎉 Events</h2>
+<div class="events" id="events"></div>
 
-<div class="events">
-    <div class="event-card">
-        <div class="event-name">Admin Abuse</div>
-        <div class="event-info">Elke zaterdag om 12:00 (Nederlandse tijd)</div>
-        <div class="timer" id="countdown">Laden...</div>
-    </div>
-</div>
-
-<!-- SPELERS ONDERAAN -->
 <div class="players">
-    <div class="player-box">
-        <h2>👥 Spelers Online</h2>
-        <div class="player-value" id="players">Offline</div>
-        <div class="sub">
-            Hoogste gemeten: <span id="peak">0</span>
-        </div>
-        <div class="sub">
-            *Wordt automatisch vernieuwd
-        </div>
-    </div>
+<div class="player-box">
+<h2>👥 Spelers Online</h2>
+<div class="player-value" id="players">Offline</div>
+<div class="sub">Hoogste gemeten: <span id="peak">0</span></div>
+<div class="sub">*Wordt automatisch vernieuwd</div>
+<canvas id="playerChart" width="400" height="200"></canvas>
+</div>
 </div>
 
-<footer>
-    © Brainrot World – Official Game Website
-</footer>
+<footer>© Brainrot World – Official Game Website</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-/* =====================
-   ADMIN ABUSE TIMER
-===================== */
-function nextSaturday(){
+/* ================= Events setup ================= */
+const eventsData=[
+    {name:"Admin Abuse", day:6, hour:12, liveEffect:true},
+    {name:"Double Coins", day:3, hour:18, liveEffect:false},
+    {name:"Halloween Event", day:5, hour:20, liveEffect:false}
+];
+
+const eventsContainer=document.getElementById("events");
+
+eventsData.forEach(ev=>{
+    const card=document.createElement("div");
+    card.className="event-card";
+    card.innerHTML=`<div class="event-name">${ev.name}</div>
+    <div class="event-info">Elke ${["Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"][ev.day]} om ${ev.hour}:00</div>
+    <div class="timer" id="timer-${ev.name.replace(/\s/g,"")}">Laden...</div>`;
+    eventsContainer.appendChild(card);
+});
+
+/* ================= Admin Abuse LIVE ================= */
+function updateTimers(){
     const now=new Date();
-    const d=new Date(now);
-    const day=now.getDay();
-    const add=(6-day+7)%7||7;
-    d.setDate(now.getDate()+add);
-    d.setHours(12,0,0,0);
-    return d;
+    eventsData.forEach(ev=>{
+        const timerElem=document.getElementById("timer-"+ev.name.replace(/\s/g,""));
+        const target=new Date(now);
+        const dayDiff=(ev.day-now.getDay()+7)%7||7;
+        target.setDate(now.getDate()+dayDiff);
+        target.setHours(ev.hour,0,0,0);
+        const diff=target-now;
+        if(diff<=0){
+            timerElem.textContent=ev.liveEffect?"🚨 "+ev.name+" LIVE! 🚨":"Begonnen!";
+            if(ev.liveEffect){
+                timerElem.style.color="#ff0000";
+                timerElem.style.fontWeight="bold";
+            }
+        }else{
+            const d=Math.floor(diff/86400000);
+            const h=Math.floor(diff/3600000)%24;
+            const m=Math.floor(diff/60000)%60;
+            const s=Math.floor(diff/1000)%60;
+            timerElem.textContent=`${d}d ${h}u ${m}m ${s}s`;
+        }
+    });
 }
-let target=nextSaturday();
+setInterval(updateTimers,1000);
+updateTimers();
 
-function updateTimer(){
-    const now=new Date();
-    let diff=target-now;
-    if(diff<=0){target=nextSaturday();return;}
-
-    const d=Math.floor(diff/86400000);
-    const h=Math.floor(diff/3600000)%24;
-    const m=Math.floor(diff/60000)%60;
-    const s=Math.floor(diff/1000)%60;
-
-    document.getElementById("countdown").textContent=
-        `${d}d ${h}u ${m}m ${s}s`;
-}
-setInterval(updateTimer,1000);
-updateTimer();
-
-/* =====================
-   PLAYER COUNT
-   BEST MOGELIJKE ZONDER SERVER
-===================== */
-const universeId="78374481907574";
-const api=`https://api.allorigins.win/raw?url=https://games.roblox.com/v1/games?universeIds=${universeId}`;
-
+/* ================= Players via server ================= */
+const api="/api/stats"; // server.js endpoint
 function updatePlayers(){
     fetch(api)
     .then(r=>r.json())
-    .then(data=>{
-        const playing=data.data[0].playing;
-        document.getElementById("players").textContent=playing;
+    .then(d=>{
+        document.getElementById("players").textContent=d.online;
+        document.getElementById("peak").textContent=d.peak;
 
-        let peak=Number(localStorage.getItem("peakBW")||0);
-        if(playing>peak){
-            peak=playing;
-            localStorage.setItem("peakBW",peak);
-        }
-        document.getElementById("peak").textContent=peak;
+        const ctx=document.getElementById('playerChart').getContext('2d');
+        const labels=d.history.map(h=>new Date(h.time).toLocaleTimeString());
+        const data=d.history.map(h=>h.players);
+        if(window.chart) window.chart.destroy();
+        window.chart=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Spelers Online',data,borderColor:'#00ffcc',backgroundColor:'rgba(0,255,204,0.2)',fill:true,tension:0.3}]},options:{scales:{y:{beginAtZero:true}}}});
     })
-    .catch(()=>{
-        document.getElementById("players").textContent="Offline";
-    });
+    .catch(()=>{document.getElementById("players").textContent="Offline";});
 }
 updatePlayers();
 setInterval(updatePlayers,30000);
