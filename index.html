@@ -2,8 +2,9 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<title>Brainrot World - Admin Abuse Timer</title>
+<title>Brainrot World - Admin Abuse</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
     margin:0;
@@ -28,20 +29,25 @@ h1 {
     border-radius:25px;
     box-shadow:0 0 40px rgba(0,0,0,0.7);
 }
-.timer-box h2 {
+.timer-title {
     font-size:2rem;
     margin-bottom:20px;
     color:#ff5a1f;
 }
-.timer-box .timer {
+.timer {
     font-size:3rem;
     font-weight:bold;
     color:#00ffcc;
 }
-.timer-box .live {
+.live {
     color:#ff0000;
-    font-weight:bold;
     font-size:3.2rem;
+    animation:pulse 1s infinite;
+}
+@keyframes pulse {
+    0% { transform:scale(1); }
+    50% { transform:scale(1.08); }
+    100% { transform:scale(1); }
 }
 .play-btn {
     margin-top:35px;
@@ -53,14 +59,11 @@ h1 {
     color:white;
     background:linear-gradient(135deg,#ff5a1f,#ff7b3a);
     box-shadow:0 0 35px #ff5a1f88;
-    transition:0.25s;
 }
-.play-btn:hover { transform:scale(1.08); }
 footer {
     margin-top:80px;
     padding:30px;
     opacity:0.6;
-    font-size:0.9rem;
 }
 </style>
 </head>
@@ -68,48 +71,68 @@ footer {
 
 <header>
 <h1>Brainrot World</h1>
-<p>Volgende Admin Abuse Timer</p>
-<a class="play-btn" href="https://www.roblox.com/games/78374481907574/Brainrot-World" target="_blank">▶ Speel Brainrot World</a>
+<p>Admin Abuse Event</p>
+<a class="play-btn" href="https://www.roblox.com/games/78374481907574/Brainrot-World" target="_blank">
+▶ Speel Brainrot World
+</a>
 </header>
 
 <div class="timer-box">
-<h2>Admin Abuse Timer</h2>
+<div class="timer-title">Volgende Admin Abuse</div>
 <div class="timer" id="timer">Laden...</div>
 </div>
 
 <footer>© Brainrot World</footer>
 
 <script>
-// Timer naar volgende zaterdag 12:00
-function updateTimer(){
-    const now = new Date();
-    let next = new Date(now);
+function getLastSaturdayNoon(now) {
+    const d = new Date(now);
+    const day = d.getDay(); // 0=zon, 6=zat
+    const diff = (day - 6 + 7) % 7;
+    d.setDate(d.getDate() - diff);
+    d.setHours(12, 0, 0, 0);
+    return d;
+}
 
-    // Zaterdag = 6
-    const daysUntilSaturday = (6 - now.getDay() + 7) % 7;
-    next.setDate(now.getDate() + daysUntilSaturday);
-    next.setHours(12,0,0,0); // 12:00
+function getNextSaturdayNoon(now) {
+    const d = new Date(now);
+    const day = d.getDay();
+    const diff = (6 - day + 7) % 7 || 7;
+    d.setDate(d.getDate() + diff);
+    d.setHours(12, 0, 0, 0);
+    return d;
+}
+
+function updateTimer() {
+    const now = new Date();
+    const timer = document.getElementById("timer");
+
+    const last = getLastSaturdayNoon(now);
+    const liveDuration = 30 * 60 * 1000; // 30 minuten
+    const liveEnd = new Date(last.getTime() + liveDuration);
+
+    // LIVE
+    if (now >= last && now < liveEnd) {
+        timer.textContent = "🚨 ADMIN ABUSE LIVE 🚨";
+        timer.classList.add("live");
+        return;
+    }
+
+    // Anders: tel naar volgende zaterdag
+    const next = getNextSaturdayNoon(now);
     const diff = next - now;
 
-    const timerElem = document.getElementById("timer");
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor(diff / 3600000) % 24;
+    const m = Math.floor(diff / 60000) % 60;
+    const s = Math.floor(diff / 1000) % 60;
 
-    // ADMIN ABUSE LIVE 30 minuten
-    const liveEnd = 30*60*1000; // 30 minuten in ms
-    if(diff <= 0 && diff > -liveEnd){
-        timerElem.textContent = "🚨 ADMIN ABUSE LIVE! 🚨";
-        timerElem.classList.add("live");
-    } else {
-        timerElem.classList.remove("live");
-        const d = Math.floor(diff/86400000);
-        const h = Math.floor(diff/3600000)%24;
-        const m = Math.floor(diff/60000)%60;
-        const s = Math.floor(diff/1000)%60;
-        timerElem.textContent = `${d}d ${h}u ${m}m ${s}s`;
-    }
+    timer.classList.remove("live");
+    timer.textContent = `${d}d ${h}u ${m}m ${s}s`;
 }
 
 updateTimer();
-setInterval(updateTimer,1000);
+setInterval(updateTimer, 1000);
 </script>
 
 </body>
