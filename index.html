@@ -2,137 +2,140 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<title>Brainrot World - Admin Abuse</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Verjaardag Special</title>
 <style>
 body {
-    margin:0;
-    font-family:'Segoe UI',Arial,sans-serif;
-    background:linear-gradient(180deg,#0a0a0a,#050505);
-    color:white;
-    text-align:center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff6a88, #ffb199);
+    text-align: center;
+    color: white;
+    overflow-x: hidden;
 }
+
 header {
-    padding:100px 20px 50px;
+    padding: 50px 20px;
 }
+
 h1 {
-    font-size:3.5rem;
-    margin-bottom:10px;
-    text-shadow:0 0 20px #ff5a1f88;
+    font-size: clamp(28px, 5vw, 50px);
 }
-.timer-box {
-    margin-top:50px;
-    display:inline-block;
-    background:rgba(255,255,255,0.07);
-    padding:50px 70px;
-    border-radius:25px;
-    box-shadow:0 0 40px rgba(0,0,0,0.7);
+
+.lieve-tekst {
+    font-size: 24px;
+    margin: 10px 0;
 }
-.timer-title {
-    font-size:2rem;
-    margin-bottom:20px;
-    color:#ff5a1f;
+
+#instruction {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #fff8;
 }
-.timer {
-    font-size:3rem;
-    font-weight:bold;
-    color:#00ffcc;
+
+#secretMessage {
+    display: none;
+    font-size: 24px;
+    margin-top: 20px;
+    color: #ffeb3b;
 }
-.live {
-    color:#ff0000;
-    font-size:3.2rem;
-    animation:pulse 1s infinite;
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 20px;
 }
-@keyframes pulse {
-    0% { transform:scale(1); }
-    50% { transform:scale(1.08); }
-    100% { transform:scale(1); }
+
+.gallery img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
-.play-btn {
-    margin-top:35px;
-    display:inline-block;
-    padding:18px 48px;
-    font-size:1.3rem;
-    border-radius:16px;
-    text-decoration:none;
-    color:white;
-    background:linear-gradient(135deg,#ff5a1f,#ff7b3a);
-    box-shadow:0 0 35px #ff5a1f88;
+
+.gallery img:hover {
+    transform: scale(1.05);
 }
-footer {
-    margin-top:80px;
-    padding:30px;
-    opacity:0.6;
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10;
 }
 </style>
 </head>
 <body>
 
 <header>
-<h1>Brainrot World</h1>
-<p>Admin Abuse Event</p>
-<a class="play-btn" href="https://www.roblox.com/games/78374481907574/Brainrot-World" target="_blank">
-▶ Speel Brainrot World
-</a>
+    <h1>🎉 Gefeliciteerd! 🎂</h1>
+    <div class="lieve-tekst">Wens je een dag vol geluk, liefde en lachjes! 💖</div>
+    <div id="instruction">🔎 Zoek de knop in de plaat hieronder! Daar is een geheime knop 😏</div>
+    <div id="secretMessage">🎁 Verrassing! Jij hebt de geheime knop gevonden! 🎁</div>
 </header>
 
-<div class="timer-box">
-<div class="timer-title">Volgende Admin Abuse</div>
-<div class="timer" id="timer">Laden...</div>
-</div>
+<section class="gallery">
+    <!-- Drie gekozen foto's -->
+    <img src="WIN_20260211_15_13_12_Pro.jpg" onclick="revealSecret(event)">
+    <img src="WhatsApp Image 2026-02-11 at 14.54.10.jpeg" onclick="revealSecret(event)">
+    <img src="WhatsApp Image 2026-02-11 at 14.54.09 (4).jpeg" onclick="revealSecret(event)">
+</section>
 
-<footer>© Brainrot World</footer>
+<canvas id="fireworks"></canvas>
 
 <script>
-function getLastSaturdayNoon(now) {
-    const d = new Date(now);
-    const day = d.getDay(); // 0=zon, 6=zat
-    const diff = (day - 6 + 7) % 7;
-    d.setDate(d.getDate() - diff);
-    d.setHours(12, 0, 0, 0);
-    return d;
-}
-
-function getNextSaturdayNoon(now) {
-    const d = new Date(now);
-    const day = d.getDay();
-    const diff = (6 - day + 7) % 7 || 7;
-    d.setDate(d.getDate() + diff);
-    d.setHours(12, 0, 0, 0);
-    return d;
-}
-
-function updateTimer() {
-    const now = new Date();
-    const timer = document.getElementById("timer");
-
-    const last = getLastSaturdayNoon(now);
-    const liveDuration = 30 * 60 * 1000; // 30 minuten
-    const liveEnd = new Date(last.getTime() + liveDuration);
-
-    // LIVE
-    if (now >= last && now < liveEnd) {
-        timer.textContent = "🚨 ADMIN ABUSE LIVE 🚨";
-        timer.classList.add("live");
-        return;
+// Klik op middelste afbeelding onthult de geheime boodschap
+function revealSecret(event) {
+    if(event.target === document.querySelectorAll('.gallery img')[1]){
+        document.getElementById("secretMessage").style.display = "block";
     }
-
-    // Anders: tel naar volgende zaterdag
-    const next = getNextSaturdayNoon(now);
-    const diff = next - now;
-
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor(diff / 3600000) % 24;
-    const m = Math.floor(diff / 60000) % 60;
-    const s = Math.floor(diff / 1000) % 60;
-
-    timer.classList.remove("live");
-    timer.textContent = `${d}d ${h}u ${m}m ${s}s`;
 }
 
-updateTimer();
-setInterval(updateTimer, 1000);
+// 3D vuurwerk
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particles = [];
+
+// Vuurwerk continu
+setInterval(() => {
+    for(let i=0;i<100;i++){
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height/2,
+            speedX: (Math.random()-0.5)*6,
+            speedY: (Math.random()-0.5)*6,
+            life: 100
+        });
+    }
+}, 300);
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,index)=>{
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.life--;
+        ctx.fillStyle = "hsl("+Math.random()*360+",100%,50%)";
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,3,0,Math.PI*2);
+        ctx.fill();
+        if(p.life<=0) particles.splice(index,1);
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+
+// Altijd schermtrilling
+setInterval(()=>{
+    const x = (Math.random()-0.5)*5;
+    const y = (Math.random()-0.5)*5;
+    document.body.style.transform = `translate(${x}px,${y}px)`;
+},50);
 </script>
 
 </body>
