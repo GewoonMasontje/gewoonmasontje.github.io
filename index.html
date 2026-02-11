@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verjaardag Special</title>
+<title>36ste Verjaardag!</title>
 <style>
 body {
     margin: 0;
@@ -41,17 +41,18 @@ h1 {
 }
 
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
     padding: 20px;
 }
 
 .gallery img {
-    width: 100%;
+    width: 80%;
+    max-width: 800px;
     border-radius: 20px;
     box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    cursor: pointer;
+    margin: 0 auto;
     transition: transform 0.3s ease;
 }
 
@@ -66,76 +67,159 @@ canvas {
     pointer-events: none;
     z-index: 10;
 }
+
+/* Slingers vlaggetjes */
+.flag {
+    width: 50px;
+    height: 35px;
+    display: inline-block;
+    margin: 0 5px;
+    transform-origin: top center;
+    border-radius: 5px;
+}
+.flags-container {
+    text-align: center;
+    margin: 30px 0;
+}
 </style>
 </head>
 <body>
 
 <header>
-    <h1>🎉 Gefeliciteerd! 🎂</h1>
-    <div class="lieve-tekst">Wens je een dag vol geluk, liefde en lachjes! 💖</div>
+    <h1>🎉 Gefeliciteerd met je 36ste verjaardag! 🎂</h1>
+    <div class="lieve-tekst">Een dag vol geluk, liefde en vrolijkheid! 💖</div>
     <div id="instruction">🔎 Zoek de knop in de plaat hieronder! Daar is een geheime knop 😏</div>
     <div id="secretMessage">🎁 Verrassing! Jij hebt de geheime knop gevonden! 🎁</div>
 </header>
 
 <section class="gallery">
-    <!-- Drie gekozen foto's -->
-    <img src="WIN_20260211_15_13_12_Pro.jpg" onclick="revealSecret(event)">
-    <img src="WhatsApp Image 2026-02-11 at 14.54.10.jpeg" onclick="revealSecret(event)">
+    <img src="WhatsApp Image 2026-02-11 at 14.54.08.jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags1"></div>
+    <img src="WhatsApp Image 2026-02-11 at 14.54.09 (1).jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags2"></div>
+    <img src="WhatsApp Image 2026-02-11 at 14.54.09 (2).jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags3"></div>
+    <img src="WhatsApp Image 2026-02-11 at 14.54.09 (3).jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags4"></div>
     <img src="WhatsApp Image 2026-02-11 at 14.54.09 (4).jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags5"></div>
+    <img src="WhatsApp Image 2026-02-11 at 14.54.09.jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags6"></div>
+    <img src="WhatsApp Image 2026-02-11 at 14.54.10 (1).jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags7"></div>
+    <img src="WhatsApp Image 2026-02-11 at 14.54.10 (2).jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags8"></div>
+    <img src="WhatsApp Image 2026-02-11 at 14.54.10 (6).jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags9"></div>
+    <img src="WhatsApp Image 2026-02-11 at 14.54.10.jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags10"></div>
+    <img src="WhatsApp Image 2026-02-11 at 15.41.26.jpeg" onclick="revealSecret(event)">
+    <div class="flags-container" id="flags11"></div>
+    <img src="WIN_20260211_15_13_12_Pro.jpg" onclick="revealSecret(event)">
 </section>
 
-<canvas id="fireworks"></canvas>
+<canvas id="partyCanvas"></canvas>
 
 <script>
-// Klik op middelste afbeelding onthult de geheime boodschap
+// Geheime knop
 function revealSecret(event) {
     if(event.target === document.querySelectorAll('.gallery img')[1]){
         document.getElementById("secretMessage").style.display = "block";
     }
 }
 
-// 3D vuurwerk
-const canvas = document.getElementById("fireworks");
+// Confetti en ballonnen
+const canvas = document.getElementById("partyCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-let particles = [];
+canvas.height = window.innerHeight * 2;
 
-// Vuurwerk continu
-setInterval(() => {
-    for(let i=0;i<100;i++){
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height/2,
-            speedX: (Math.random()-0.5)*6,
-            speedY: (Math.random()-0.5)*6,
-            life: 100
-        });
-    }
-}, 300);
+let confetti = [];
+let balloons = [];
 
-function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach((p,index)=>{
-        p.x += p.speedX;
-        p.y += p.speedY;
-        p.life--;
-        ctx.fillStyle = "hsl("+Math.random()*360+",100%,50%)";
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,3,0,Math.PI*2);
-        ctx.fill();
-        if(p.life<=0) particles.splice(index,1);
+// Confetti
+for(let i=0;i<150;i++){
+    confetti.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        size: Math.random()*8+4,
+        color: `hsl(${Math.random()*360},100%,50%)`,
+        speed: Math.random()*2+1
     });
-    requestAnimationFrame(animate);
 }
-animate();
 
-// Altijd schermtrilling
-setInterval(()=>{
-    const x = (Math.random()-0.5)*5;
-    const y = (Math.random()-0.5)*5;
-    document.body.style.transform = `translate(${x}px,${y}px)`;
-},50);
+// Ballonnen
+for(let i=0;i<15;i++){
+    balloons.push({
+        x: Math.random()*canvas.width,
+        y: canvas.height + Math.random()*200,
+        radius: 30,
+        color: `hsl(${Math.random()*360},70%,60%)`,
+        speed: Math.random()*1+0.5,
+        number: 36
+    });
+}
+
+// Slingers
+const flagColors = ["#ff4d4d","#ffcc00","#4dff4d","#4d4dff","#ff66ff"];
+for(let i=1;i<=11;i++){
+    const container = document.getElementById("flags"+i);
+    for(let j=0;j<5;j++){
+        const flag = document.createElement("div");
+        flag.classList.add("flag");
+        flag.style.backgroundColor = flagColors[j % flagColors.length];
+        flag.textContent = "36";
+        container.appendChild(flag);
+    }
+}
+
+// Slingers animatie
+const flags = document.querySelectorAll(".flag");
+flags.forEach(f=>{
+    f.angle = Math.random()*0.5 - 0.25;
+    f.speed = (Math.random()*0.02)+0.01;
+});
+
+function animateFlags() {
+    flags.forEach(f=>{
+        f.angle = 0.2 * Math.sin(Date.now()*f.speed);
+        f.style.transform = `rotate(${f.angle}rad)`;
+    });
+    requestAnimationFrame(animateFlags);
+}
+
+animateFlags();
+
+// Canvas animatie
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // Confetti
+    confetti.forEach((c)=>{
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x,c.y,c.size,c.size/2);
+        c.y += c.speed;
+        if(c.y>canvas.height) c.y = -10;
+    });
+
+    // Ballonnen
+    balloons.forEach((b)=>{
+        ctx.fillStyle = b.color;
+        ctx.beginPath();
+        ctx.ellipse(b.x,b.y,b.radius,b.radius*1.2,0,0,2*Math.PI);
+        ctx.fill();
+        ctx.fillStyle="white";
+        ctx.font="20px Arial";
+        ctx.textAlign="center";
+        ctx.fillText(b.number,b.x,b.y+6);
+        b.y -= b.speed;
+        if(b.y<-50) b.y = canvas.height + 50;
+    });
+
+    requestAnimationFrame(draw);
+}
+
+draw();
 </script>
 
 </body>
