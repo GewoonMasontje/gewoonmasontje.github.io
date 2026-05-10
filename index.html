@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>36ste Verjaardag!</title>
+<title>Fijne Moederdag ❤️</title>
+
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff6a88, #ffb199);
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9ec4, #ffdde1, #d9a7ff);
     text-align: center;
     color: white;
     overflow-x: hidden;
@@ -19,45 +20,62 @@ header {
 }
 
 h1 {
-    font-size: clamp(28px, 5vw, 50px);
+    font-size: clamp(30px, 6vw, 60px);
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
 }
 
 .lieve-tekst {
     font-size: 24px;
-    margin: 10px 0;
+    margin-top: 20px;
 }
 
 #instruction {
+    margin-top: 20px;
     font-size: 20px;
-    margin: 20px 0;
-    color: #fff8;
+    color: #fff;
 }
 
 #secretMessage {
     display: none;
-    font-size: 24px;
-    margin-top: 20px;
-    color: #ffeb3b;
+    font-size: 28px;
+    margin-top: 25px;
+    color: #fff8dc;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 25px #ff69b4; }
 }
 
 .gallery {
     display: flex;
     flex-direction: column;
     gap: 50px;
-    padding: 20px;
+    padding: 30px;
+}
+
+.photo-box {
+    position: relative;
 }
 
 .gallery img {
-    width: 80%;
-    max-width: 800px;
-    border-radius: 20px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    margin: 0 auto;
-    transition: transform 0.3s ease;
+    width: 85%;
+    max-width: 900px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    transition: transform 0.4s ease;
+    cursor: pointer;
 }
 
 .gallery img:hover {
-    transform: scale(1.05);
+    transform: scale(1.04) rotate(1deg);
+}
+
+.photo-text {
+    margin-top: 15px;
+    font-size: 22px;
+    color: white;
 }
 
 canvas {
@@ -65,161 +83,122 @@ canvas {
     top: 0;
     left: 0;
     pointer-events: none;
-    z-index: 10;
-}
-
-/* Slingers vlaggetjes */
-.flag {
-    width: 50px;
-    height: 35px;
-    display: inline-block;
-    margin: 0 5px;
-    transform-origin: top center;
-    border-radius: 5px;
-}
-.flags-container {
-    text-align: center;
-    margin: 30px 0;
+    z-index: 100;
 }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>🎉 Gefeliciteerd met je 36ste verjaardag! 🎂</h1>
-    <div class="lieve-tekst">Een dag vol geluk, liefde en vrolijkheid! 💖</div>
-    <div id="instruction">🔎 Zoek de knop in de plaat hieronder! Daar is een geheime knop 😏</div>
-    <div id="secretMessage">🎁 Verrassing! Jij hebt de geheime knop gevonden! 🎁</div>
+    <h1>💖 Fijne Moederdag Mam 💖</h1>
+    <div class="lieve-tekst">
+        Dankjewel voor alles wat je doet ❤️  
+        Je bent de allerliefste moeder!
+    </div>
+    <div id="instruction">
+        Klik op de speciale foto voor een verrassing 🎁
+    </div>
+    <div id="secretMessage">
+        🌹 Ik hou van jou mam! Fijne Moederdag! 🌹
+    </div>
 </header>
 
 <section class="gallery">
-    <img src="WhatsApp Image 2026-02-11 at 14.54.08.jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags1"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.09 (1).jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags2"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.09 (2).jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags3"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.09 (3).jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags4"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.09 (4).jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags5"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.09.jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags6"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.10 (1).jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags7"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.10 (2).jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags8"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.10 (6).jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags9"></div>
-    <img src="WhatsApp Image 2026-02-11 at 14.54.10.jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags10"></div>
-    <img src="WhatsApp Image 2026-02-11 at 15.41.26.jpeg" onclick="revealSecret(event)">
-    <div class="flags-container" id="flags11"></div>
-    <img src="WIN_20260211_15_13_12_Pro.jpg" onclick="revealSecret(event)">
+
+<div class="photo-box">
+    <img src="af1.png" onclick="revealSecret(0)">
+    <div class="photo-text">Mooie herinneringen ❤️</div>
+</div>
+
+<div class="photo-box">
+    <img src="af2.png" onclick="revealSecret(1)">
+    <div class="photo-text">Samen lachen 😊</div>
+</div>
+
+<div class="photo-box">
+    <img src="af3.png" onclick="revealSecret(2)">
+    <div class="photo-text">Altijd speciaal 💕</div>
+</div>
+
+<div class="photo-box">
+    <img src="af4.png" onclick="revealSecret(3)">
+    <div class="photo-text">De liefste moeder 🌸</div>
+</div>
+
+<div class="photo-box">
+    <img src="af5.png" onclick="revealSecret(4)">
+    <div class="photo-text">Bedankt voor alles 💖</div>
+</div>
+
+<div class="photo-box">
+    <img src="af6.png" onclick="revealSecret(5)">
+    <div class="photo-text">Jij bent geweldig ✨</div>
+</div>
+
+<div class="photo-box">
+    <img src="af7.png" onclick="revealSecret(6)">
+    <div class="photo-text">Fijne Moederdag 🌷</div>
+</div>
+
 </section>
 
-<canvas id="partyCanvas"></canvas>
+<canvas id="heartCanvas"></canvas>
 
 <script>
-// Geheime knop
-function revealSecret(event) {
-    if(event.target === document.querySelectorAll('.gallery img')[1]){
+function revealSecret(index){
+    if(index === 3){
         document.getElementById("secretMessage").style.display = "block";
     }
 }
 
-// Confetti en ballonnen
-const canvas = document.getElementById("partyCanvas");
+// Hartjes animatie
+const canvas = document.getElementById("heartCanvas");
 const ctx = canvas.getContext("2d");
+
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight * 2;
+canvas.height = window.innerHeight;
 
-let confetti = [];
-let balloons = [];
+let hearts = [];
 
-// Confetti
-for(let i=0;i<150;i++){
-    confetti.push({
+for(let i=0;i<80;i++){
+    hearts.push({
         x: Math.random()*canvas.width,
         y: Math.random()*canvas.height,
-        size: Math.random()*8+4,
-        color: `hsl(${Math.random()*360},100%,50%)`,
+        size: Math.random()*20+10,
         speed: Math.random()*2+1
     });
 }
 
-// Ballonnen
-for(let i=0;i<15;i++){
-    balloons.push({
-        x: Math.random()*canvas.width,
-        y: canvas.height + Math.random()*200,
-        radius: 30,
-        color: `hsl(${Math.random()*360},70%,60%)`,
-        speed: Math.random()*1+0.5,
-        number: 36
-    });
+function drawHeart(x,y,size){
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.bezierCurveTo(x-size/2,y-size/2,x-size,y+size/3,x,y+size);
+    ctx.bezierCurveTo(x+size,y+size/3,x+size/2,y-size/2,x,y);
+    ctx.fillStyle = "rgba(255,105,180,0.7)";
+    ctx.fill();
 }
 
-// Slingers
-const flagColors = ["#ff4d4d","#ffcc00","#4dff4d","#4d4dff","#ff66ff"];
-for(let i=1;i<=11;i++){
-    const container = document.getElementById("flags"+i);
-    for(let j=0;j<5;j++){
-        const flag = document.createElement("div");
-        flag.classList.add("flag");
-        flag.style.backgroundColor = flagColors[j % flagColors.length];
-        flag.textContent = "36";
-        container.appendChild(flag);
-    }
-}
-
-// Slingers animatie
-const flags = document.querySelectorAll(".flag");
-flags.forEach(f=>{
-    f.angle = Math.random()*0.5 - 0.25;
-    f.speed = (Math.random()*0.02)+0.01;
-});
-
-function animateFlags() {
-    flags.forEach(f=>{
-        f.angle = 0.2 * Math.sin(Date.now()*f.speed);
-        f.style.transform = `rotate(${f.angle}rad)`;
-    });
-    requestAnimationFrame(animateFlags);
-}
-
-animateFlags();
-
-// Canvas animatie
-function draw(){
+function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    // Confetti
-    confetti.forEach((c)=>{
-        ctx.fillStyle = c.color;
-        ctx.fillRect(c.x,c.y,c.size,c.size/2);
-        c.y += c.speed;
-        if(c.y>canvas.height) c.y = -10;
+    hearts.forEach(h=>{
+        drawHeart(h.x,h.y,h.size);
+        h.y -= h.speed;
+        if(h.y < -20){
+            h.y = canvas.height+20;
+            h.x = Math.random()*canvas.width;
+        }
     });
 
-    // Ballonnen
-    balloons.forEach((b)=>{
-        ctx.fillStyle = b.color;
-        ctx.beginPath();
-        ctx.ellipse(b.x,b.y,b.radius,b.radius*1.2,0,0,2*Math.PI);
-        ctx.fill();
-        ctx.fillStyle="white";
-        ctx.font="20px Arial";
-        ctx.textAlign="center";
-        ctx.fillText(b.number,b.x,b.y+6);
-        b.y -= b.speed;
-        if(b.y<-50) b.y = canvas.height + 50;
-    });
-
-    requestAnimationFrame(draw);
+    requestAnimationFrame(animate);
 }
 
-draw();
+animate();
+
+window.addEventListener("resize", ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
 </script>
 
 </body>
