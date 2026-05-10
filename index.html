@@ -3,49 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fijne Moederdag ❤️</title>
+<title>Fijne Moederdag Mama Andrea ❤️</title>
 
 <style>
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #ff9ec4, #ffdde1, #d9a7ff);
-    text-align: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9ec4, #ffd6e8, #d9a7ff);
     color: white;
+    text-align: center;
     overflow-x: hidden;
 }
 
 header {
-    padding: 50px 20px;
+    padding: 40px 20px;
 }
 
 h1 {
-    font-size: clamp(30px, 6vw, 60px);
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    font-size: clamp(35px, 6vw, 65px);
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
 }
 
 .lieve-tekst {
     font-size: 24px;
-    margin-top: 20px;
+    margin-top: 15px;
+}
+
+.gedicht-box {
+    max-width: 900px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.18);
+    padding: 35px;
+    border-radius: 25px;
+    line-height: 1.9;
+    font-size: 22px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
 }
 
 #instruction {
-    margin-top: 20px;
-    font-size: 20px;
-    color: #fff;
+    margin-top: 25px;
+    font-size: 22px;
 }
 
 #secretMessage {
     display: none;
-    font-size: 28px;
+    font-size: 30px;
     margin-top: 25px;
     color: #fff8dc;
     animation: glow 1s infinite alternate;
 }
 
 @keyframes glow {
-    from { text-shadow: 0 0 10px #fff; }
-    to { text-shadow: 0 0 25px #ff69b4; }
+    from { text-shadow: 0 0 10px white; }
+    to { text-shadow: 0 0 25px hotpink; }
 }
 
 .gallery {
@@ -69,13 +79,12 @@ h1 {
 }
 
 .gallery img:hover {
-    transform: scale(1.04) rotate(1deg);
+    transform: scale(1.04);
 }
 
 .photo-text {
     margin-top: 15px;
     font-size: 22px;
-    color: white;
 }
 
 canvas {
@@ -90,16 +99,45 @@ canvas {
 <body>
 
 <header>
-    <h1>💖 Fijne Moederdag Mam 💖</h1>
+    <h1>💖 Fijne Moederdag Mama Andrea 💖</h1>
+
     <div class="lieve-tekst">
-        Dankjewel voor alles wat je doet ❤️  
-        Je bent de allerliefste moeder!
+        Voor de allerliefste mama 🌷
     </div>
+
+    <div class="gedicht-box">
+        <b>Voor mama Andrea 💖</b><br><br>
+
+        Lieve mama Andrea, vandaag is jouw dag,<br>
+        een dag vol liefde met een grote lach.<br>
+        Jij staat altijd voor mij klaar,<br>
+        en daarom zeg ik hoeveel ik van je hou, echt waar.<br><br>
+
+        In Fortnite ben jij supergoed,<br>
+        en Block Blast speel jij zoals niemand dat doet.<br>
+        Ook op Facebook scroll jij heel snel,<br>
+        daar ben jij stiekem ook een kampioen in, echt wel.<br><br>
+
+        Maar het mooiste aan jou is niet wat je kan,<br>
+        het is dat jij er altijd voor mij bent, vanaf het begin al aan.<br>
+        Met jouw liefde, zorg en warme hart,<br>
+        maak jij elke dag bijzonder apart.<br><br>
+
+        Dankjewel voor alles wat jij steeds doet,<br>
+        jij maakt moeilijke dagen weer goed.<br>
+        Ik ben blij dat jij mijn mama bent,<br>
+        de liefste die ik ken, honderd procent.<br><br>
+
+        ❤️ Ik hou van jou ❤️<br>
+        <b>Van Mason</b>
+    </div>
+
     <div id="instruction">
-        Klik op de speciale foto voor een verrassing 🎁
+        Klik op de speciale foto voor een geheime verrassing 🎁
     </div>
+
     <div id="secretMessage">
-        🌹 Ik hou van jou mam! Fijne Moederdag! 🌹
+        🌹 Jij bent de allerliefste mama! 🌹
     </div>
 </header>
 
@@ -107,27 +145,27 @@ canvas {
 
 <div class="photo-box">
     <img src="af1.png" onclick="revealSecret(0)">
-    <div class="photo-text">Mooie herinneringen ❤️</div>
+    <div class="photo-text">Samen herinneringen ❤️</div>
 </div>
 
 <div class="photo-box">
     <img src="af2.png" onclick="revealSecret(1)">
-    <div class="photo-text">Samen lachen 😊</div>
+    <div class="photo-text">Altijd lachen 😊</div>
 </div>
 
 <div class="photo-box">
     <img src="af3.png" onclick="revealSecret(2)">
-    <div class="photo-text">Altijd speciaal 💕</div>
+    <div class="photo-text">De beste mama 💕</div>
 </div>
 
 <div class="photo-box">
     <img src="af4.png" onclick="revealSecret(3)">
-    <div class="photo-text">De liefste moeder 🌸</div>
+    <div class="photo-text">Klik hier voor verrassing 🎁</div>
 </div>
 
 <div class="photo-box">
     <img src="af5.png" onclick="revealSecret(4)">
-    <div class="photo-text">Bedankt voor alles 💖</div>
+    <div class="photo-text">Bedankt voor alles 🌸</div>
 </div>
 
 <div class="photo-box">
@@ -151,7 +189,6 @@ function revealSecret(index){
     }
 }
 
-// Hartjes animatie
 const canvas = document.getElementById("heartCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -160,7 +197,7 @@ canvas.height = window.innerHeight;
 
 let hearts = [];
 
-for(let i=0;i<80;i++){
+for(let i=0;i<100;i++){
     hearts.push({
         x: Math.random()*canvas.width,
         y: Math.random()*canvas.height,
@@ -184,8 +221,9 @@ function animate(){
     hearts.forEach(h=>{
         drawHeart(h.x,h.y,h.size);
         h.y -= h.speed;
+
         if(h.y < -20){
-            h.y = canvas.height+20;
+            h.y = canvas.height + 20;
             h.x = Math.random()*canvas.width;
         }
     });
