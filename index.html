@@ -3,237 +3,330 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fijne Moederdag Mama Andrea ❤️</title>
+<title>Beste Vader | Van Mason</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff9ec4, #ffd6e8, #d9a7ff);
-    color: white;
-    text-align: center;
-    overflow-x: hidden;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-header {
-    padding: 40px 20px;
+body{
+    font-family:Consolas, monospace;
+    background:#0d1117;
+    color:#00ff88;
+    text-align:center;
+    overflow-x:hidden;
 }
 
-h1 {
-    font-size: clamp(35px, 6vw, 65px);
-    text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+#matrix{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
 }
 
-.lieve-tekst {
-    font-size: 24px;
-    margin-top: 15px;
+header{
+    padding:60px 20px;
 }
 
-.gedicht-box {
-    max-width: 900px;
-    margin: 40px auto;
-    background: rgba(255,255,255,0.18);
-    padding: 35px;
-    border-radius: 25px;
-    line-height: 1.9;
-    font-size: 22px;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+h1{
+    font-size:clamp(40px,6vw,80px);
+    text-shadow:0 0 20px #00ff88;
 }
 
-#instruction {
-    margin-top: 25px;
-    font-size: 22px;
+.subtitle{
+    color:#58a6ff;
+    font-size:24px;
+    margin-top:15px;
 }
 
-#secretMessage {
-    display: none;
-    font-size: 30px;
-    margin-top: 25px;
-    color: #fff8dc;
-    animation: glow 1s infinite alternate;
+.terminal{
+    max-width:1000px;
+    margin:40px auto;
+    background:#161b22;
+    border:2px solid #00ff88;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(0,255,136,.3);
 }
 
-@keyframes glow {
-    from { text-shadow: 0 0 10px white; }
-    to { text-shadow: 0 0 25px hotpink; }
+.terminal-header{
+    background:#21262d;
+    padding:12px;
+    text-align:left;
 }
 
-.gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    padding: 30px;
+.dot{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:6px;
 }
 
-.photo-box {
-    position: relative;
+.red{background:#ff5f56;}
+.yellow{background:#ffbd2e;}
+.green{background:#27c93f;}
+
+.terminal-body{
+    padding:30px;
+    text-align:left;
+    line-height:1.8;
+    font-size:20px;
 }
 
-.gallery img {
-    width: 85%;
-    max-width: 900px;
-    border-radius: 25px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
-    transition: transform 0.4s ease;
-    cursor: pointer;
+.code{
+    color:#58a6ff;
 }
 
-.gallery img:hover {
-    transform: scale(1.04);
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+    max-width:1400px;
+    margin:50px auto;
+    padding:20px;
 }
 
-.photo-text {
-    margin-top: 15px;
-    font-size: 22px;
+.card{
+    background:#161b22;
+    border:2px solid #00ff88;
+    border-radius:20px;
+    overflow:hidden;
+    transition:.3s;
 }
 
-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 100;
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 25px rgba(0,255,136,.4);
+}
+
+.card img{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+    cursor:pointer;
+}
+
+.card p{
+    padding:20px;
+    font-size:20px;
+}
+
+#secret{
+    display:none;
+    margin:50px auto;
+    max-width:900px;
+    background:#161b22;
+    border:2px solid gold;
+    border-radius:20px;
+    padding:30px;
+    color:gold;
+    font-size:28px;
+    animation:glow 1s infinite alternate;
+}
+
+@keyframes glow{
+    from{
+        text-shadow:0 0 10px gold;
+    }
+    to{
+        text-shadow:0 0 30px gold;
+    }
+}
+
+.footer{
+    margin:60px 0;
+    color:#58a6ff;
+    font-size:22px;
 }
 </style>
 </head>
 <body>
 
+<canvas id="matrix"></canvas>
+
 <header>
-    <h1>💖 Fijne Moederdag Mama Andrea 💖</h1>
 
-    <div class="lieve-tekst">
-        Voor de allerliefste mama 🌷
-    </div>
+<h1>💻 Beste Vader 💻</h1>
 
-    <div class="gedicht-box">
-        <b>Voor mama Andrea 💖</b><br><br>
+<div class="subtitle">
+Voor de beste vader van de wereld 🚀
+</div>
 
-        Lieve mama Andrea, vandaag is jouw dag,<br>
-        een dag vol liefde met een grote lach.<br>
-        Jij staat altijd voor mij klaar,<br>
-        en daarom zeg ik hoeveel ik van je hou, echt waar.<br><br>
+<div class="terminal">
 
-        In Fortnite ben jij supergoed,<br>
-        en Block Blast speel jij zoals niemand dat doet.<br>
-        Ook op Facebook scroll jij heel snel,<br>
-        daar ben jij stiekem ook een kampioen in, echt wel.<br><br>
+<div class="terminal-header">
+<span class="dot red"></span>
+<span class="dot yellow"></span>
+<span class="dot green"></span>
+</div>
 
-        Maar het mooiste aan jou is niet wat je kan,<br>
-        het is dat jij er altijd voor mij bent, vanaf het begin al aan.<br>
-        Met jouw liefde, zorg en warme hart,<br>
-        maak jij elke dag bijzonder apart.<br><br>
+<div class="terminal-body">
 
-        Dankjewel voor alles wat jij steeds doet,<br>
-        jij maakt moeilijke dagen weer goed.<br>
-        Ik ben blij dat jij mijn mama bent,<br>
-        de liefste die ik ken, honderd procent.<br><br>
+<span class="code">system.start();</span>
 
-        ❤️ Ik hou van jou ❤️<br>
-        <b>Van Mason</b>
-    </div>
+<br><br>
 
-    <div id="instruction">
-        Klik op de speciale foto voor een geheime verrassing 🎁
-    </div>
+Hallo papa,
 
-    <div id="secretMessage">
-        🌹 Jij bent de allerliefste mama! 🌹
-    </div>
+<br><br>
+
+Bedankt voor alles wat je voor mij doet.
+<br>
+Voor alle hulp, steun en leuke momenten samen.
+
+<br><br>
+
+Jij staat altijd voor mij klaar wanneer ik je nodig heb.
+<br>
+Daar ben ik heel blij mee.
+
+<br><br>
+
+<span class="code">
+if(papa == "geweldig"){
+<br>
+&nbsp;&nbsp;return "Beste Vader Ooit";
+<br>
+}
+</span>
+
+<br><br>
+
+Deze website heb ik speciaal voor jou gemaakt.
+
+<br><br>
+
+❤️ Bedankt voor alles ❤️
+
+<br><br>
+
+<b>- Mason</b>
+
+</div>
+
+</div>
+
 </header>
+
+<h2>Klik op de speciale foto voor een verrassing 🎁</h2>
 
 <section class="gallery">
 
-<div class="photo-box">
-    <img src="af1.png" onclick="revealSecret(0)">
-    <div class="photo-text">Samen herinneringen ❤️</div>
+<div class="card">
+<img src="af1.png" onclick="showSecret(0)">
+<p>👨‍💻 Samen mooie dingen maken</p>
 </div>
 
-<div class="photo-box">
-    <img src="af2.png" onclick="revealSecret(1)">
-    <div class="photo-text">Altijd lachen 😊</div>
+<div class="card">
+<img src="af2.png" onclick="showSecret(1)">
+<p>🚀 Altijd klaar om te helpen</p>
 </div>
 
-<div class="photo-box">
-    <img src="af3.png" onclick="revealSecret(2)">
-    <div class="photo-text">De beste mama 💕</div>
+<div class="card">
+<img src="af3.png" onclick="showSecret(2)">
+<p>💡 Slimme ideeën</p>
 </div>
 
-<div class="photo-box">
-    <img src="af4.png" onclick="revealSecret(3)">
-    <div class="photo-text">Klik hier voor verrassing 🎁</div>
+<div class="card">
+<img src="af4.png" onclick="showSecret(3)">
+<p>🎁 Klik hier voor de verrassing</p>
 </div>
 
-<div class="photo-box">
-    <img src="af5.png" onclick="revealSecret(4)">
-    <div class="photo-text">Bedankt voor alles 🌸</div>
+<div class="card">
+<img src="af5.png" onclick="showSecret(4)">
+<p>❤️ Bedankt voor alles</p>
 </div>
 
-<div class="photo-box">
-    <img src="af6.png" onclick="revealSecret(5)">
-    <div class="photo-text">Jij bent geweldig ✨</div>
-</div>
-
-<div class="photo-box">
-    <img src="af7.png" onclick="revealSecret(6)">
-    <div class="photo-text">Fijne Moederdag 🌷</div>
+<div class="card">
+<img src="af6.png" onclick="showSecret(5)">
+<p>⭐ Beste vader ooit</p>
 </div>
 
 </section>
 
-<canvas id="heartCanvas"></canvas>
+<div id="secret">
+🏆 Achievement Unlocked! 🏆
+<br><br>
+Beste Vader Van De Wereld
+<br><br>
+Level: MAXIMUM
+</div>
+
+<div class="footer">
+Made with ❤️ by Mason
+</div>
 
 <script>
-function revealSecret(index){
+function showSecret(index){
     if(index === 3){
-        document.getElementById("secretMessage").style.display = "block";
+        document.getElementById("secret").style.display = "block";
+
+        window.scrollTo({
+            top:document.body.scrollHeight,
+            behavior:"smooth"
+        });
     }
 }
 
-const canvas = document.getElementById("heartCanvas");
+const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let hearts = [];
+const letters =
+"01{}[]<>#$%&ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-for(let i=0;i<100;i++){
-    hearts.push({
-        x: Math.random()*canvas.width,
-        y: Math.random()*canvas.height,
-        size: Math.random()*20+10,
-        speed: Math.random()*2+1
-    });
+const fontSize = 18;
+const columns = Math.floor(canvas.width / fontSize);
+
+const drops = [];
+
+for(let i = 0; i < columns; i++){
+    drops[i] = 1;
 }
 
-function drawHeart(x,y,size){
-    ctx.beginPath();
-    ctx.moveTo(x,y);
-    ctx.bezierCurveTo(x-size/2,y-size/2,x-size,y+size/3,x,y+size);
-    ctx.bezierCurveTo(x+size,y+size/3,x+size/2,y-size/2,x,y);
-    ctx.fillStyle = "rgba(255,105,180,0.7)";
-    ctx.fill();
-}
+function draw(){
 
-function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "rgba(13,17,23,0.08)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    hearts.forEach(h=>{
-        drawHeart(h.x,h.y,h.size);
-        h.y -= h.speed;
+    ctx.fillStyle = "#00ff88";
+    ctx.font = fontSize + "px Consolas";
 
-        if(h.y < -20){
-            h.y = canvas.height + 20;
-            h.x = Math.random()*canvas.width;
+    for(let i = 0; i < drops.length; i++){
+
+        const text =
+        letters[Math.floor(Math.random()*letters.length)];
+
+        ctx.fillText(
+            text,
+            i * fontSize,
+            drops[i] * fontSize
+        );
+
+        if(
+            drops[i] * fontSize > canvas.height &&
+            Math.random() > 0.975
+        ){
+            drops[i] = 0;
         }
-    });
 
-    requestAnimationFrame(animate);
+        drops[i]++;
+    }
+
+    requestAnimationFrame(draw);
 }
 
-animate();
+draw();
 
-window.addEventListener("resize", ()=>{
+window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
